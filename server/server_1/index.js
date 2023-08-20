@@ -4,12 +4,14 @@ const cors = require("cors");
 const { userRouter } = require("./routes/user.route");
 const { authCheck } = require("./middleware/authentication");
 const { connectDb } = require("./config/db");
+const { movieRouter } = require("./routes/movie.route");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use("/users", userRouter);
+app.use("/movies", movieRouter)
 app.use(authCheck);
 
 app.listen(process.env.PORT, () => {
