@@ -59,10 +59,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const NavigationBar = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
   };
+
+  const showUsername = () => {
+    const user_name = localStorage.getItem("user_name");
+    setUserName(user_name);
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -85,10 +91,10 @@ const NavigationBar = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
           </Typography>
-            <Button variant="contained" onClick={toggleLoginForm}>Login</Button> 
+          {userName ? <p>{userName}</p> : <Button variant="contained" onClick={toggleLoginForm}>Login</Button>}
         </Toolbar>
       </AppBar>
-      {showLoginForm && <LoginForm onClose={toggleLoginForm} />}
+      {showLoginForm && <LoginForm onClose={toggleLoginForm} showUserName={showUsername} />}
     </Box>
   );
 };

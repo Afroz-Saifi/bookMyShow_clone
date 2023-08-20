@@ -90,7 +90,7 @@ const RegistrationForm = ({ toggleForms }) => {
         margin="normal"
       />
 <Button variant="contained" fullWidth color="primary" onClick={handleRegistration}>
-        {loading ? <CircularProgress color="secondary" /> : 'Register'}
+        {loading ? <CircularProgress color="secondary" size={24} /> : 'Register'}
       </Button>
       <Button fullWidth onClick={toggleForms}>
         Login
@@ -113,7 +113,7 @@ const RegistrationForm = ({ toggleForms }) => {
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
           <Button onClick={handleVerifyOTP} color="primary">
-          {loadingOtp ? <CircularProgress color="secondary" /> : 'Verify'}
+          {loadingOtp ? <CircularProgress color="secondary" size={24} /> : 'Verify'}
           </Button>
         </DialogActions>
       </Dialog>

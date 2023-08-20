@@ -51,9 +51,10 @@ const loginUser = async (req, res) => {
         let checker = bcrypt.compareSync(password, data.password);
         if (checker) {
           return res.status(200).json({
+            success: true,
             msg: "login successfull",
-            user_name: data.first_name,
-            token: jwt.sign({ userId: data._id }, process.env.secretKey, {
+            user_name: data.username,
+            token: jwt.sign({ userId: data._id }, process.env.access_token, {
               expiresIn: "3h",
             }),
           });
@@ -69,7 +70,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ msg: "invalid email" });
     }
   } catch (error) {
-    return res.status(404).json({ err: error });
+    return res.status(404).json({ err: error.message });
   }
 };
 
