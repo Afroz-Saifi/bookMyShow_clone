@@ -3,6 +3,8 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavigationBar from './components/NavigationBar';
 import UserDashboard from './pages/UserDashboard';
+import Movies from './components/Movies';
+import MovieDescription from './components/MovieDescription';
 
 function App() {
   return (
@@ -11,8 +13,9 @@ function App() {
       <BrowserRouter>
       <NavigationBar />
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Movies />} />
           <Route path="userdashborad" element={<UserDashboard />} />
+          <Route path="movieDescription/:id" element={<MovieDescription />} />
         </Routes>
       </BrowserRouter>
     </div>
