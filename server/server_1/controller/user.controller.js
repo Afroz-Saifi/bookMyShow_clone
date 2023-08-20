@@ -88,7 +88,7 @@ const optVerifier = async(req,res)=>{
      if(otp==databaseotp[0].otp){
       await userModel.findByIdAndUpdate(user[0]._id, { verify: true });
       await UserOTP.deleteMany({Useremail});
-      return res.status(200).json({msg:"Email verified"});
+      return res.status(200).json({msg:"Email verified", success: true});
      }else{
       res.status(200).json({msg:"Wrong otp !"});
      }
