@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import axios from "axios";
+import SendToMobileIcon from '@mui/icons-material/SendToMobile';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Button from '@mui/material/Button';
 
 const getDateAtIndex = (index) => {
     const today = new Date();
@@ -9,26 +14,125 @@ const getDateAtIndex = (index) => {
     return futureDate;
   };
   
-  const DateBox = ({ date }) => (
-    <Paper elevation={4} style={{ padding: '4px', textAlign: 'center', cursor: 'pointer', height: '65px', width: "50px", wordSpacing: 0, lineHeight: "1px"}}>
+  const DateBox = ({ date, selected, onClick }) => {
+    const handleDateClick = () => {
+        console.log(date.toDateString());
+      };
+    return (
+       <Paper elevation={4} style={{ padding: '4px', textAlign: 'center', cursor: 'pointer', height: '65px', width: "50px", wordSpacing: 0, lineHeight: "1px", backgroundColor: selected ? '#282c34' : 'white', color: selected ? 'white' : '#282c34',}} onClick={onClick}>
       <p style={{fontSize: "12px"}}>{date.toLocaleDateString('en-US', { weekday: 'short' })}</p>
       <p style={{fontWeight: "bold"}}>{date.getDate()}</p>
       <p style={{fontSize: "12px"}}>{date.toLocaleDateString('en-US', { month: 'short' })}</p>
-    </Paper>
-  );
+    </Paper> 
+    )
+    }
+
 
 const BuyTickets = () => {
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; // Provide default values for destructuring
     const today = new Date();
+    const currentTime = new Date();
+    const scheduleTimes = [
+        "11:00 AM", "1:45 PM", "2:00 PM", "5:30 PM", "8:25 PM", "11:00 PM"
+      ];
   const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
+  const [selectedBox, setSelectedBox] = useState(null);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [cinemaData, setCinemaData] = useState([]);
+  const baseUrl = "http://localhost:8000/cinema"
+
+  const handleDateClick = (index) => {
+    if (selectedBox === index) {
+      setSelectedBox(null); // Deselect if already selected
+    } else {
+      setSelectedBox(index);
+      console.log(dates[index].toDateString());
+    }
+  };
+
+  const fetchCinemas = async () => {
+    try {
+        const response = await axios(`${baseUrl}/cinemas`)
+        if(response.data.success){
+            setCinemaData(response.data.data)
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchCinemas()
+  }, [])
+
+  function compareTime(inputTime) {
+    const currentTime = new Date();
+    const [inputHours, inputMinutes] = inputTime.split(':');
+    const inputDateTime = new Date();
+    inputDateTime.setHours(
+      parseInt(inputHours) + (inputTime.includes('PM') && inputHours !== '12' ? 12 : 0),
+      parseInt(inputMinutes),
+      0
+    );
+  
+    if (inputDateTime < currentTime) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const handleTimeClick = (time) => {
+    setSelectedSlot(time);
+  };
 
   return (
+    <div>
     <Box display="flex" justifyContent="space-between" padding="10px" sx={{width: 250}}>
       {dates.map((date, index) => (
-        <DateBox key={index} date={date} />
+        <DateBox
+        key={index}
+        date={date}
+        selected={selectedBox === index}
+        onClick={() => handleDateClick(index)}
+      />
       ))}
     </Box>
+    <div>
+        {
+            cinemaData.map(({name, VIP, Executive, Normal}) => <div>
+                <div className="left_cinema">
+                    <p>{name}</p>
+                    <div><SendToMobileIcon sx={{color: "lime"}} /> <span>M-Ticket</span></div>
+                    <div><FastfoodIcon sx={{color: "orange"}} /> <span>Food & Beverage</span> </div>
+                </div>
+                <div className="info_cinema">
+                    <InfoOutlinedIcon /> INFO
+                </div>
+                <div className="right_cinema">
+                <div>
+      {scheduleTimes.map(time => {        
+        const isTimePassed = compareTime(time)
+
+        return (
+          <Button
+            key={time}
+            variant="contained"
+            disabled={isTimePassed}
+            onClick={() => !isTimePassed && handleTimeClick(time)}
+            style={{ margin: '10px' }}
+          >
+            {time}
+          </Button>
+        );
+      })}
+    </div>
+                </div>
+            </div>)
+        }
+    </div>
+    </div>
   );
 }
 

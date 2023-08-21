@@ -64,6 +64,27 @@
   margin-right: 10px;
 }
 
+.seat_format td{
+  font-size: 11px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  padding: 2px;
+}
+
+.seat_format .available_seats{
+  border: 1px solid lime;
+  cursor: pointer;
+}
+
+.seat_format .available_seats:hover{
+  background-color: rgba(154, 239, 154, 0.66);
+}
+
+.seat_format .available_seats.selected_seat{
+  background-color: lime;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
