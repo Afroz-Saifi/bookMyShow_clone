@@ -29,4 +29,17 @@ const getMovieDescription = async (req, res) => {
     }
 }
 
-module.exports = { getAllMovies, getMovieDescription };
+const addNewMovie = async (req, res) => {
+  try {
+    const rawData = req.body;
+    const movieData = new MovieModel(rawData);
+    await movieData.save();
+    return res.status(201).json({
+      success: true,
+    })
+  } catch (error) {
+    return res.json({error: error.message})
+  }
+}
+
+module.exports = { getAllMovies, getMovieDescription, addNewMovie };

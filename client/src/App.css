@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -19,6 +23,45 @@
   width: 100%;
   height: 300px;
   object-fit: cover;
+}
+
+.poster_container{
+  display: flex;
+  height: 89vh;
+  width: 100%;
+  padding: 20px;
+  /* background-color: #282c34; */
+  background: rgb(40,44,52);
+/* background: linear-gradient(90deg, rgba(40,44,52,1) 0%, rgba(40,44,52,0.5557825425091911) 100%);   */
+}
+
+.description_poster{
+  height: 100%;
+  width: 315px;
+  border-radius: 10px;
+}
+
+.poster_right{
+  padding-left: 20px;
+  /* border: 1px solid rgba(255, 255, 255, 0) */
+  width: 100%;
+  color: #fff;
+  height: 100%;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.quality_lang{
+  margin: 20px 0;
+}
+
+.poster_right .meta_info{
+  background-color: #fff;
+  color: #282c34;
+  padding: 5px 12px;
+  border-radius: 4px;
+  margin-right: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

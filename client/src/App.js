@@ -5,6 +5,7 @@ import NavigationBar from './components/NavigationBar';
 import UserDashboard from './pages/UserDashboard';
 import Movies from './components/Movies';
 import MovieDescription from './components/MovieDescription';
+import BuyTickets from './pages/BuyTickets';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Movies />} />
           <Route path="userdashborad" element={<UserDashboard />} />
           <Route path="movieDescription/:id" element={<MovieDescription />} />
+          <Route path="buyTickets" element={<BuyTickets />} />
         </Routes>
       </BrowserRouter>
     </div>
