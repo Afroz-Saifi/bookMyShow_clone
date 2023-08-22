@@ -1015,3 +1015,125 @@ const bookings = {
   seat: ["I7", "I6", "M10", "F9", "E8"],
   userId: "64e1fe8a2dc5aa660b1d32ce"
 }
+
+const foodBeverage = [
+  {
+    "category": "POPCORN",
+    "title": "Large Tub Salted Popcorn 240g",
+    "subtitle": "Large Tub Salted Popcorn (240g | 750 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000095_09072021113304.png",
+    "price": 590
+  },
+  {
+    "category": "POPCORN",
+    "title": "Regular Tub Salted Popcorn 90g",
+    "subtitle": "Regular Tub Salted Popcorn (90g | 281 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000095_09072021113304.png",
+    "price": 430
+  },
+  {
+    "category": "POPCORN",
+    "title": "Regular Tub Cheese Popcorn 110g",
+    "subtitle": "Regular Tub Cheese Popcorn (110g | 333 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000095_09072021113304.png",
+    "price": 460
+  },
+  {
+    "category": "POPCORN",
+    "title": "Medium Tub Caramel Popcorn 270g",
+    "subtitle": "Medium Tub Caramel Popcorn (270g | 904 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000095_09072021113304.png",
+    "price": 540
+  },
+  {
+    "category": "POPCORN",
+    "title": "Regular Tub Caramel Popcorn 180g",
+    "subtitle": "Regular Tub Caramel Popcorn (180g | 603 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000095_09072021113304.png",
+    "price": 460
+  },
+  {
+    "category": "COMBOS",
+    "title": "Medium Tub Combo (Cheese)",
+    "subtitle": "Medium Tub Cheese Popcorn 165g + 2 Coke 450ml (896 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000096_09072021113726.png",
+    "price": 1090
+  },
+  {
+    "category": "COMBOS",
+    "title": "Regular Tub Combo (Salted)",
+    "subtitle": "Regular Tub Salted Popcorn 90g + Coke 450ml (479 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000097_09072021113606.png",
+    "price": 980
+  },
+  {
+    "category": "COMBOS",
+    "title": "Medium Tub Combo (Salted)",
+    "subtitle": "Medium Tub Salted Popcorn 135g + 2 Coke 450ml (817 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000096_09072021113726.png",
+    "price": 1060
+  },
+  {
+    "category": "COMBOS",
+    "title": "Family Combo (Salted)",
+    "subtitle": "Regular Tub Salted Popcorn 90g + Nachos 180g + 2 Coke 450ml (1252 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2001259_25042023140924.png",
+    "price": 1330
+  },
+  {
+    "category": "COMBOS",
+    "title": "Regular Tub Combo (Cheese)",
+    "subtitle": "Regular Tub Cheese Popcorn 110g + Coke 450ml (531 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000097_09072021113606.png",
+    "price": 750
+  },
+  {
+    "category": "COMBOS",
+    "title": "Family Combo (Cheese)",
+    "subtitle": "Regular Tub Cheese Popcorn 110g + Nachos 180g + 2 Coke 450ml (1304 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2001259_25042023140924.png",
+    "price": 1360
+  },
+  {
+    "category": "COMBOS",
+    "title": "Family Combo (Caramel)",
+    "subtitle": "Regular Tub Caramel Popcorn 180g + Nachos 180g + 2 Coke 450ml (1573 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2001259_25042023140924.png",
+    "price": 1360
+  },
+  {
+    "category": "COMBOS",
+    "title": "Regular Tub Combo (Caramel)",
+    "subtitle": "Regular Tub Caramel Popcornl 180g + Coke 450ml (800 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000097_09072021113606.png",
+    "price": 750
+  },
+  {
+    "category": "COMBOS",
+    "title": "Medium Tub Combo (Caramel)",
+    "subtitle": "Medium Tub Caramel Popcorn 270g + 2 Coke 450ml (1300 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/2000096_09072021113726.png",
+    "price": 1090
+  },
+  {
+    "category": "BEVERAGE",
+    "title": "Large Coke 810ml",
+    "subtitle": "Large Coke (810ml | 356 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/1020011_17082018145045.png",
+    "price": 410
+  },
+  {
+    "category": "BEVERAGE",
+    "title": "Regular Coke 540ml",
+    "subtitle": "Regular Coke (540ml | 238 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/1020011_17082018145045.png",
+    "price": 370
+  },
+  {
+    "category": "BEVERAGE",
+    "title": "Medium Coke 675ml",
+    "subtitle": "Medium Coke (675ml | 297 Kcal)",
+    "image": "https://in.bmscdn.com/fnb/v3/xxhdpi/1020011_17082018145045.png",
+    "price": 390
+  },
+]

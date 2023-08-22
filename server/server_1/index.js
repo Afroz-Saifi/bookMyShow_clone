@@ -7,6 +7,7 @@ const { connectDb } = require("./config/db");
 const { movieRouter } = require("./routes/movie.route");
 const { cinemaRouter } = require("./routes/cinema.route");
 const { bookingsRouter } = require("./routes/bookings.route");
+const { foodBeverageRouter } = require("./routes/foodBeverage.route");
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use("/users", userRouter);
 app.use("/movies", movieRouter)
 app.use("/cinema", cinemaRouter)
 app.use("/bookings", bookingsRouter)
+app.use("/food", foodBeverageRouter)
 app.use(authCheck);
 
 app.listen(process.env.PORT, () => {

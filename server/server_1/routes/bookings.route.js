@@ -4,6 +4,6 @@ const { makeBooking, getCinemaBookings } = require("../controller/bookings.contr
 const bookingsRouter = express.Router();
 
 bookingsRouter.post("/book", makeBooking)
-bookingsRouter.get("/getCinemaBookings", getCinemaBookings)
+bookingsRouter.post("/getCinemaBookings", getCinemaBookings)
 
 module.exports = { bookingsRouter };

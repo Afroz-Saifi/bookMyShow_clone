@@ -80,6 +80,7 @@
 .seat_format .available_seats{
   border: 1px solid #49ba8e;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .seat_format .available_seats:hover{
@@ -161,11 +162,44 @@
   z-index: 99;
 }
 
+.already_booked{
+  background-color: #4142436d;
+  color: #fff;
+}
+
+.seat-legends-wrapper {
+  height: 32px;
+  width: 100%;
+  left: 0;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 12%);
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  position: fixed;
+  bottom: 0;
+  z-index: 98;
+  /* border: 1px solid red; */
+}
+
+.seat-legend-container{
+  display: flex;
+  align-items: center;
+}
+.seat-legend-box{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+
 .terms_conditions p{
   margin: 0;
   color: #888c90;
   font-size: 14px;
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

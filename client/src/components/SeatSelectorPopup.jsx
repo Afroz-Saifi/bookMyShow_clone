@@ -9,15 +9,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  IconButton,
 } from '@mui/material';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import { useNavigate } from 'react-router-dom';
 
-const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedData, selectedTime }) => {
+const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedDate, selectedTime }) => {
   const navigate = useNavigate();
   const [selectedSeats, setSelectedSeats] = useState(1);
 
@@ -28,7 +24,7 @@ const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice
   const handleSeatsConfirmation = () => {
     onSelectSeats(selectedSeats);
     navigate("/buySeats", {
-      state: { _id,  selectedSeats}
+      state: { _id,  selectedSeats, selectedDate, selectedTime}
     })
     onClose();
   };

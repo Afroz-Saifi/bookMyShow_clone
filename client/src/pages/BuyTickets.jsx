@@ -36,7 +36,7 @@ const BuyTickets = () => {
     const today = new Date();
     const currentTime = new Date();
     const scheduleTimes = [
-        "11:00 AM", "1:45 PM", "2:00 PM", "5:30 PM", "8:25 PM", "11:00 PM"
+        "11:00 AM", "1:45 PM", "2:00 PM", "5:30 PM", "8:25 PM", "11:00 PM", "11:45 PM"
       ];
       const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
       const [selectedBox, setSelectedBox] = useState(0);
