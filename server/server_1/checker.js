@@ -1007,3 +1007,11 @@ const PVR = [
     }
   }
 ]
+
+const bookings = {
+  PvrId: "64e36eed62b4a25a37d1ef49",
+  date: "Tue Aug 22 2023",
+  time: "8:25 PM",
+  seat: ["I7", "I6", "M10", "F9", "E8"],
+  userId: "64e1fe8a2dc5aa660b1d32ce"
+}

@@ -56,6 +56,7 @@ const BuyTickets = () => {
     } else {
       setSelectedBox(index);
       setSelectedDate(dates[index].toDateString());
+      console.log(dates[index].toDateString());
     }
   };
 
