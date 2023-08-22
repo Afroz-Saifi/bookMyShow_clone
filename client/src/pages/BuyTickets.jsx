@@ -31,7 +31,8 @@ const getDateAtIndex = (index) => {
 
 const BuyTickets = () => {
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
-    const { language, format } = langFormatData || {}; // Provide default values for destructuring
+    const { language, format } = langFormatData || {}; 
+    const [selectedCinemaId, setSelectedCinemaId] = useState(null)
     const today = new Date();
     const currentTime = new Date();
     const scheduleTimes = [
@@ -90,12 +91,13 @@ const BuyTickets = () => {
     }
   }
 
-  const handleTimeClick = (time, normal, vip, executive) => {
+  const handleTimeClick = (time, normal, vip, executive, _id) => {
     setSelectedSlot(time);
     setNormalPrice(normal)
     setVipPrice(vip)
     setExecutivePrice(executive)
     setPopupOpen(true)
+    setSelectedCinemaId(_id)
   };
 
   const handlePopupClose = () => {
@@ -145,7 +147,7 @@ const BuyTickets = () => {
             key={time}
             variant="outlined"
             disabled={isTimePassed}
-            onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price)}
+            onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price, _id)}
             style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "red" : null }}
           >
             {time}
@@ -157,7 +159,7 @@ const BuyTickets = () => {
         normalPrice={normalPrice}
         vipPrice={vipPrice}
         executivePrice={executivePrice}
-        _id={_id}
+        _id={selectedCinemaId}
         selectedDate={selectedDate}
         selectedTime={selectedSlot}
       />

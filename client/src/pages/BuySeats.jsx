@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
+import screen from '../images/screen.png'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from "@mui/material";
 
 const BuySeats = () => {
     const location = useLocation();
   const { _id, selectedSeats } = location.state;
+  const [openDialog, setOpenDialog] = useState(true);
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; // Provide default values for destructuring  const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [cinemaData, setCinemaData] = useState(null);
+  const [payButton, setPaybutton] = useState(false);
+  const [payment, setPayment] = useState(null)
   const baseUrl = "http://localhost:8000/cinema/cinema"
 
   const fetchCinema = async () => {
@@ -39,48 +44,16 @@ const BuySeats = () => {
         );
         setSelectedSeat(selectedSeatsInRow.map(s => `${row}${s}`));
       }
+      setPaybutton(true);
+      setPayment(selectedSeats*(quality==="VIP" ? cinemaData.VIP.price : quality==="Executive" ? cinemaData.Executive.price : cinemaData.Normal.price))
   }
-
-
-  const PVRData = {
-    name: "PVR INOX EF3",
-    VIP: {
-        price: 420,
-        format: [
-            ["M", "#", "#", "11", "10", "#", "9", "8", "#", "7", "6", "#", "5", "4", "#", "3", "2", "#", "1"]
-        ]
-    },
-    Executive: {
-        price: 280,
-        format: [
-            ["L", "#", "#", 16, 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-            ["K", "#", "#", 16, 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-            ["J", "#", "#", 16, 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-            ["I", "#", "#", 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-            ["H", "#", "#", 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-            ["G", "#", "#", 15, 14, 13, "#", "#", 12,11,10,9,8,7,6,5,4,3,2,1],
-        ]
-    },
-    Normal: {
-        price: 260, 
-        format: [
-            ["F", "#", "#", 11,10,9,8,"#","#",7,6,5,4,3,2,1],
-            ["E", "#", "#", 11,10,9,8,"#","#",7,6,5,4,3,2,1],
-            ["D", "#", "#", 11,10,9,8,"#","#",7,6,5,4,3,2,1],
-            ["C", "#", "#", 11,10,9,8,"#","#",7,6,5,4,3,2,1],
-            ["B", "#", "#", 11,10,9,8,"#","#",7,6,5,4,3,2,1],
-            ["A", "#", "#", 10,9,8,7,"#","#",6,5,4,3,2,1],
-        ]
-    }
-  }
-
-
 
   return (
-    <div>
+    <div className="cinema_seats_container">
         {
             cinemaData ? 
             <div>
+                <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>VIP-Rs. {cinemaData.VIP.price}.00</p>
                 <table className="seat_format" cellSpacing={"7px"}>
         <tbody>
             {
@@ -100,6 +73,7 @@ const BuySeats = () => {
         }
         </tbody>
     </table>
+    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>VIP-Rs. {cinemaData.Executive.price}.00</p>
                 <table className="seat_format" cellSpacing={"7px"}>
         <tbody>
             {
@@ -119,6 +93,7 @@ const BuySeats = () => {
         }
         </tbody>
     </table>
+    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>VIP-Rs. {cinemaData.Normal.price}.00</p>
                 <table className="seat_format" cellSpacing={"7px"}>
         <tbody>
             {
@@ -138,12 +113,44 @@ const BuySeats = () => {
         }
         </tbody>
     </table>
+    <div style={{textAlign: "center", marginTop: "10px", lineHeight: "2px", marginBottom: "90px"}}>
+      <img src={screen} style={{width: "400px", display: "block", margin: "auto"}} />
+      <p>All eyes this way please!</p>
             </div>
             
+        {payButton && <div className="bottom_selector">
+            <Button variant="contained" sx={{width: "300px"}} onClick={() => setOpenDialog(true)}> Pay Rs. {payment}.00 </Button>
+        </div>}
+    </div>
     :
     <span>loading..</span>
         }
-    
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle sx={{fontSize: "16px", textAlign: "center"}}>Terms & Conditions</DialogTitle>
+        <DialogContent className="terms_conditions">
+            <p>1. Seat layout page for PVR cinemas is for representational purposes only and actual seat layout might vary.</p>
+            <p>2. Tickets are compulsory for children of 3 years & above.</p>
+            <p>3. Patrons below the age of 18 years cannot be admitted for movies certified `A`.</p>
+            <p>4. For 3D movies, ticket price includes charges towards usage of 3D glasses.</p>   
+            <p>5. Outside Food & Beverage are not allowed in the cinema premises.</p>
+            <p>6. Please follow the covid guidelines (As per the directions from your local authority)</p>
+            <p>7. Items like carry-bags, eatables, helmets, handbags are not allowed inside the theatres and are strictly prohibited.</p>
+            <p>8. Items like laptops, camera, knives, lighter, match box, cigarettes, firearms and all types of inflammable objects are strictly prohibited.</p>
+            <p>9. Patrons under the influence of alcohol or any other form of drugs will not be allowed inside the cinema premises.</p>
+            <p>10. In case a ticket is lost or misplaced, a duplicate ticket cannot be issued.</p>
+            <p>11. Tickets once purchased cannot be cancelled, exchanged or refunded.</p>
+            <p>12. Decision(s) taken by PVR cinema shall be final and binding, ``rights of reserved``.</p>
+            <p>13. Pre-booked food & beverage needs to be collected from F&B counter.</p>
+            <p>14. Ticket prices are subject to change without any prior notification.</p>
+            <p>15. Recording of a film through mobile or camera is strictly prohibited and is a punishable offence.</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} variant="outlined">Cancel</Button>
+          <Button color="primary" variant="contained">
+          Accept
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

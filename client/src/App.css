@@ -64,6 +64,11 @@
   margin-right: 10px;
 }
 
+.cinema_seats_container{
+  display: flex;
+  justify-content: center;
+}
+
 .seat_format td{
   font-size: 11px;
   width: 25px;
@@ -78,11 +83,13 @@
 }
 
 .seat_format .available_seats:hover{
-  background-color: rgba(154, 239, 154, 0.66);
+  background-color: #1ea83c;
+  color: #fff;
 }
 
 .seat_format .available_seats.selected_seat{
-  background-color: #49ba8e;
+  background-color: #1ea83c;
+  color: #fff;
 }
 
 .cinema_container{
@@ -141,6 +148,25 @@
   line-height: 3px;
   font-size: 13px;
 }
+
+.bottom_selector{
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.terms_conditions p{
+  margin: 0;
+  color: #888c90;
+  font-size: 14px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
