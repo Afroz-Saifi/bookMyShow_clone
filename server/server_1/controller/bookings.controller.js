@@ -16,4 +16,40 @@ const makeBooking = async (req, res) => {
   }
 };
 
-module.exports = { makeBooking };
+const getCinemaBookings = async (req, res) => {
+  const { PvrId, date, time } = req.body;
+  try {
+    const data = await Booking.aggregate([
+      {
+        $match: {
+          PvrId: PvrId,
+          date: new Date(date),
+          time: time,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          seats: { $push: "$seat" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          seats: 1,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { makeBooking, getCinemaBookings };
