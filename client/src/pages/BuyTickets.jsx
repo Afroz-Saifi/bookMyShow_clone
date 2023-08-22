@@ -6,6 +6,7 @@ import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
+import SeatSelectorPopup from "../components/SeatSelectorPopup";
 
 const getDateAtIndex = (index) => {
     const today = new Date();
@@ -36,10 +37,13 @@ const BuyTickets = () => {
     const scheduleTimes = [
         "11:00 AM", "1:45 PM", "2:00 PM", "5:30 PM", "8:25 PM", "11:00 PM"
       ];
-  const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
-  const [selectedBox, setSelectedBox] = useState(null);
+      const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
+      const [selectedBox, setSelectedBox] = useState(0);
+      const [selectedDate, setSelectedDate] = useState(dates[0].toDateString())
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [cinemaData, setCinemaData] = useState([]);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedSeats, setSelectedSeats] = useState(null);
   const baseUrl = "http://localhost:8000/cinema"
 
   const handleDateClick = (index) => {
@@ -47,7 +51,7 @@ const BuyTickets = () => {
       setSelectedBox(null); // Deselect if already selected
     } else {
       setSelectedBox(index);
-      console.log(dates[index].toDateString());
+      setSelectedDate(dates[index].toDateString());
     }
   };
 
@@ -85,6 +89,17 @@ const BuyTickets = () => {
 
   const handleTimeClick = (time) => {
     setSelectedSlot(time);
+    setPopupOpen(true)
+  };
+
+  const handlePopupClose = () => {
+    // Close the popup
+    setPopupOpen(false);
+  };
+
+  const handleSelectSeats = (numSeats) => {
+    // Save the selected number of seats in state
+    setSelectedSeats(numSeats);
   };
 
   return (
@@ -99,16 +114,19 @@ const BuyTickets = () => {
       />
       ))}
     </Box>
-    <div>
+    <div className="cinema_container">
         {
             cinemaData.map(({name, VIP, Executive, Normal}) => <div>
                 <div className="left_cinema">
                     <p>{name}</p>
-                    <div><SendToMobileIcon sx={{color: "lime"}} /> <span>M-Ticket</span></div>
-                    <div><FastfoodIcon sx={{color: "orange"}} /> <span>Food & Beverage</span> </div>
+                    <div>
+                        <div><SendToMobileIcon sx={{color: "#49ba8e"}} /> <span style={{color: "#49ba8e"}}>M-Ticket</span></div>
+                    <div style={{marginLeft: "14px"}}><FastfoodIcon sx={{color: "orange"}} /> <span style={{color: "orange"}}>Food & Beverage</span> </div>
+                    </div>
+                    
                 </div>
                 <div className="info_cinema">
-                    <InfoOutlinedIcon /> INFO
+                    <InfoOutlinedIcon /> <span>INFO</span> 
                 </div>
                 <div className="right_cinema">
                 <div>
@@ -116,18 +134,27 @@ const BuyTickets = () => {
         const isTimePassed = compareTime(time)
 
         return (
-          <Button
+            <>
+            <Button
             key={time}
-            variant="contained"
+            variant="outlined"
             disabled={isTimePassed}
             onClick={() => !isTimePassed && handleTimeClick(time)}
-            style={{ margin: '10px' }}
+            style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "red" : null }}
           >
             {time}
-          </Button>
-        );
-      })}
+          </Button> 
+          <SeatSelectorPopup
+        open={popupOpen}
+        onClose={handlePopupClose}
+        onSelectSeats={handleSelectSeats}
+      />
+          </>
+                         
+          );
+        })}
     </div>
+        <span style={{color: "orange", fontSize: "30px"}}>•&nbsp;<span style={{fontSize: "14px", color: "#32343b8c"}}>Non-cancellable</span></span>  
                 </div>
             </div>)
         }

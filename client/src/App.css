@@ -73,7 +73,7 @@
 }
 
 .seat_format .available_seats{
-  border: 1px solid lime;
+  border: 1px solid #49ba8e;
   cursor: pointer;
 }
 
@@ -82,7 +82,48 @@
 }
 
 .seat_format .available_seats.selected_seat{
-  background-color: lime;
+  background-color: #49ba8e;
+}
+
+.cinema_container{
+  /* border: 1px solid red; */
+  padding: 20px;
+}
+.cinema_container > div{
+  border-top: 1px solid #32343b40;
+  display: flex;
+  align-items: baseline;
+}
+.cinema_container .left_cinema{
+  width: 25vw;
+}
+.cinema_container .left_cinema>div{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.cinema_container .left_cinema>div>div{
+  display: flex;
+  align-items: center;
+}
+.cinema_container .right_cinema{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cinema_container .right_cinema>span{
+  display: flex;
+  align-items: center;
+}
+
+.info_cinema{
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   margin-right: 10px;
+   font-size: 14px;
+   color: #282c34;
 }
 
 @media (prefers-reduced-motion: no-preference) {
