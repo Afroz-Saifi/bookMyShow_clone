@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-
+import { useLocation } from 'react-router-dom';
 
 const BuySeats = () => {
+    const location = useLocation();
+  const { _id, selectedSeats } = location.state;
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; // Provide default values for destructuring  const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [seatNum, setSeatNum] = useState(3);
+
+  const fetchCinema = async () => {
+    try {
+        // const 
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
 
   const handleSeatSelector = (seatNo, row) => {
     console.log(`${row}${seatNo}`);

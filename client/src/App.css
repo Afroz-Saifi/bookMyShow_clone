@@ -123,9 +123,24 @@
    cursor: pointer;
    margin-right: 10px;
    font-size: 14px;
-   color: #282c34;
+   color: #34373c;
 }
 
+.rate_container {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+  border-top: 1px solid #37393c5b;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.rate_container > div{
+  line-height: 3px;
+  font-size: 13px;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

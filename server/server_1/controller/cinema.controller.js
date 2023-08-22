@@ -30,4 +30,19 @@ const getCinemas = async (req, res) => {
   }
 }
 
-module.exports = { addNewCinema, getCinemas };
+const getCinema = async (req, res) => {
+  try {
+    const {id} = req.params
+    const data = await Cinema.findById(id)
+    return res.status(200).json({
+      success: true,
+      data
+    })    
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    })
+  }
+}
+
+module.exports = { addNewCinema, getCinemas, getCinema };

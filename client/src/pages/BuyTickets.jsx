@@ -44,6 +44,9 @@ const BuyTickets = () => {
   const [cinemaData, setCinemaData] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState(null);
+  const [normalPrice, setNormalPrice] = useState(null);
+  const [vipPrice, setVipPrice] = useState(null);
+  const [executivePrice, setExecutivePrice] = useState(null);
   const baseUrl = "http://localhost:8000/cinema"
 
   const handleDateClick = (index) => {
@@ -87,8 +90,11 @@ const BuyTickets = () => {
     }
   }
 
-  const handleTimeClick = (time) => {
+  const handleTimeClick = (time, normal, vip, executive) => {
     setSelectedSlot(time);
+    setNormalPrice(normal)
+    setVipPrice(vip)
+    setExecutivePrice(executive)
     setPopupOpen(true)
   };
 
@@ -116,7 +122,7 @@ const BuyTickets = () => {
     </Box>
     <div className="cinema_container">
         {
-            cinemaData.map(({name, VIP, Executive, Normal}) => <div>
+            cinemaData.map(({name, Normal, Executive, VIP, _id}) => <div key={_id}>
                 <div className="left_cinema">
                     <p>{name}</p>
                     <div>
@@ -139,7 +145,7 @@ const BuyTickets = () => {
             key={time}
             variant="outlined"
             disabled={isTimePassed}
-            onClick={() => !isTimePassed && handleTimeClick(time)}
+            onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price)}
             style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "red" : null }}
           >
             {time}
@@ -148,6 +154,12 @@ const BuyTickets = () => {
         open={popupOpen}
         onClose={handlePopupClose}
         onSelectSeats={handleSelectSeats}
+        normalPrice={normalPrice}
+        vipPrice={vipPrice}
+        executivePrice={executivePrice}
+        _id={_id}
+        selectedDate={selectedDate}
+        selectedTime={selectedSlot}
       />
           </>
                          

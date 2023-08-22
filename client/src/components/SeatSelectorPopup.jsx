@@ -15,8 +15,10 @@ import {
 } from '@mui/material';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { useNavigate } from 'react-router-dom';
 
-const SeatSelectorPopup = ({ open, onClose, onSelectSeats }) => {
+const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedData, selectedTime }) => {
+  const navigate = useNavigate();
   const [selectedSeats, setSelectedSeats] = useState(1);
 
   const handleSeatSelect = (num) => {
@@ -25,6 +27,9 @@ const SeatSelectorPopup = ({ open, onClose, onSelectSeats }) => {
 
   const handleSeatsConfirmation = () => {
     onSelectSeats(selectedSeats);
+    navigate("/buySeats", {
+      state: { _id,  selectedSeats}
+    })
     onClose();
   };
 
@@ -77,10 +82,22 @@ const SeatSelectorPopup = ({ open, onClose, onSelectSeats }) => {
     </Box>
         </div>
         {/* Divs in a row */}
-        <div>
-          <div>Normal</div>
-          <div>EXECUTIVE</div>
-          <div>VIP</div>
+        <div className='rate_container'>
+          <div>
+            <p style={{color: "rgb(52 55 60)"}}>NORMAL</p>
+            <p style={{fontWeight: 'bold'}}>Rs. {normalPrice}.00</p>
+            <p style={{color: "#2ec492"}}>Available</p>
+          </div>
+          <div>
+            <p style={{color: "rgb(52 55 60)"}}>EXECUTIVE</p>
+            <p style={{fontWeight: 'bold'}}>Rs. {executivePrice}.00</p>
+            <p style={{color: "#2ec492"}}>Available</p>
+          </div>
+          <div>
+            <p style={{color: "rgb(52 55 60)"}}>VIP</p>
+            <p style={{fontWeight: 'bold'}}>Rs. {vipPrice}.00</p>
+            <p style={{color: "#2ec492"}}>Available</p>
+          </div>
         </div>
       </DialogContent>
       <DialogActions>
