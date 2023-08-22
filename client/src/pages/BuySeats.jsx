@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 
 const BuySeats = () => {
@@ -7,26 +8,34 @@ const BuySeats = () => {
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; // Provide default values for destructuring  const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
   const [selectedSeat, setSelectedSeat] = useState([]);
-  const [seatNum, setSeatNum] = useState(3);
+  const [cinemaData, setCinemaData] = useState(null);
+  const baseUrl = "http://localhost:8000/cinema/cinema"
 
   const fetchCinema = async () => {
     try {
-        // const 
+        const response = await axios(`${baseUrl}/${_id}`)
+        if(response.data.success){
+            setCinemaData(response.data.data)
+        }
     } catch (error) {
         console.log(error.message);
     }
   }
 
-  const handleSeatSelector = (seatNo, row) => {
+  useEffect(() => {
+    fetchCinema()
+  }, [])
+
+  const handleSeatSelector = (seatNo, row, quality) => {
     console.log(`${row}${seatNo}`);
-    if (seatNum === 1) {
+    if (selectedSeats === 1) {
         setSelectedSeat([`${row}${seatNo}`]);
       } else {
-        const selectedRow = PVRData.Executive.format.find(ele => ele[0] === row);
+        const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
         const selectedIndex = selectedRow.indexOf(seatNo);
         const selectedSeatsInRow = selectedRow.slice(
           selectedIndex,
-          selectedIndex + seatNum
+          selectedIndex + selectedSeats
         );
         setSelectedSeat(selectedSeatsInRow.map(s => `${row}${s}`));
       }
@@ -69,9 +78,13 @@ const BuySeats = () => {
 
   return (
     <div>
-    <table className="seat_format" cellSpacing={"7px"}>
         {
-            PVRData.Executive.format.map(ele => {
+            cinemaData ? 
+            <div>
+                <table className="seat_format" cellSpacing={"7px"}>
+        <tbody>
+            {
+            cinemaData.VIP.format.map(ele => {
                 return (
                     <tr>
                     {ele.map((seats, index) => {
@@ -79,13 +92,58 @@ const BuySeats = () => {
                             return (<td style={{color: "#282c34"}}>{seats}</td>)
                         }
                         const isSelected = selectedSeat.includes(`${ele[0]}${seats}`);
-                        return seats==="#" ? <td style={{color: "transparent"}}>00</td> :<td className={`available_seats ${isSelected ? "selected_seat" : ""}`} onClick={() => handleSeatSelector(seats, ele[0])}>{seats}</td>
+                        return seats==="#" ? <td style={{color: "transparent"}}>00</td> :<td className={`available_seats ${isSelected ? "selected_seat" : ""}`} onClick={() => handleSeatSelector(seats, ele[0], "VIP")}>{seats}</td>
                     })}
                     </tr>
                 )
             })
         }
+        </tbody>
     </table>
+                <table className="seat_format" cellSpacing={"7px"}>
+        <tbody>
+            {
+            cinemaData.Executive.format.map(ele => {
+                return (
+                    <tr>
+                    {ele.map((seats, index) => {
+                        if(index==0){
+                            return (<td style={{color: "#282c34"}}>{seats}</td>)
+                        }
+                        const isSelected = selectedSeat.includes(`${ele[0]}${seats}`);
+                        return seats==="#" ? <td style={{color: "transparent"}}>00</td> :<td className={`available_seats ${isSelected ? "selected_seat" : ""}`} onClick={() => handleSeatSelector(seats, ele[0], "Executive")}>{seats}</td>
+                    })}
+                    </tr>
+                )
+            })
+        }
+        </tbody>
+    </table>
+                <table className="seat_format" cellSpacing={"7px"}>
+        <tbody>
+            {
+            cinemaData.Normal.format.map(ele => {
+                return (
+                    <tr>
+                    {ele.map((seats, index) => {
+                        if(index==0){
+                            return (<td style={{color: "#282c34"}}>{seats}</td>)
+                        }
+                        const isSelected = selectedSeat.includes(`${ele[0]}${seats}`);
+                        return seats==="#" ? <td style={{color: "transparent"}}>00</td> :<td className={`available_seats ${isSelected ? "selected_seat" : ""}`} onClick={() => handleSeatSelector(seats, ele[0], "Normal")}>{seats}</td>
+                    })}
+                    </tr>
+                )
+            })
+        }
+        </tbody>
+    </table>
+            </div>
+            
+    :
+    <span>loading..</span>
+        }
+    
     </div>
   );
 }
