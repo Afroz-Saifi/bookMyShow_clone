@@ -11,6 +11,8 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const FoodBeverage = () => {
     const location = useLocation();
@@ -19,6 +21,11 @@ const FoodBeverage = () => {
     const movieName = movieData.title
     const [filter, setFilter] = useState('ALL');
     const [foodData, setFoodData] = useState([]);
+    const [selectedFood, setSelectedFood] = useState([]);
+    const [selectedFoodDetails, setSelectedFoodDetails] = useState({});
+    const [payableAmount, setPayableAmount] = useState(payment);
+    const [foodAmount, setFoddAmount] = useState(0);
+
     const baseUrl = "http://localhost:8000/food/category"
 
     const fetchFood = async (category) => {
@@ -35,6 +42,46 @@ const FoodBeverage = () => {
     useEffect(() => {
         fetchFood(filter)
     }, [filter])
+
+    const handleFoodSelection = (id, title, quantity, price) => {
+        const food_key = `food_${id}`
+        const foodDetailsCopy = {...selectedFoodDetails}
+        foodDetailsCopy[`${food_key}`] ? foodDetailsCopy[`${food_key}`].quantity++ : foodDetailsCopy[`${food_key}`] = {title, quantity, price}
+        const food_details_key = Object.keys(foodDetailsCopy);
+        setSelectedFoodDetails(foodDetailsCopy)
+        setSelectedFood(food_details_key);
+        let paymentCopy = payableAmount
+        const total = paymentCopy+price 
+        setPayableAmount(total)
+        let foodPriceCopy = foodAmount
+        setFoddAmount(foodPriceCopy+price)
+    }
+
+    const changeQuantity = (id, action, price) => {
+        const food_key = `food_${id}`
+        const foodDetailsCopy = {...selectedFoodDetails}
+        if(action){
+            foodDetailsCopy[`${food_key}`].quantity--
+            if(foodDetailsCopy[`${food_key}`].quantity <= 0){
+                delete foodDetailsCopy[`${food_key}`]
+            }
+            let paymentCopy = payableAmount
+            const total = paymentCopy-price
+            setPayableAmount(total)
+            let foodPriceCopy = foodAmount
+            setFoddAmount(foodPriceCopy-price)
+        }else{
+            foodDetailsCopy[`${food_key}`].quantity++
+            let paymentCopy = payableAmount
+            const total = paymentCopy+price
+            setPayableAmount(total)
+            let foodPriceCopy = foodAmount
+            setFoddAmount(foodPriceCopy+price)
+        }
+        const food_details_key = Object.keys(foodDetailsCopy);
+        setSelectedFoodDetails(foodDetailsCopy)
+        setSelectedFood(food_details_key);
+    }
 
     return (
         <div className="food_beverage_container">
@@ -147,15 +194,31 @@ const FoodBeverage = () => {
                               ₹{price}
                             </Typography>
                           </div>
-                          <Button
+                          {
+                            selectedFoodDetails[`food_${_id}`] ? 
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: "10px",
+                                marginLeft: 'auto',
+                            }}> 
+                                 <RemoveCircleOutlineIcon color="primary" sx={{cursor: "pointer"}} onClick={() => changeQuantity(_id, true, price)} />
+                                <span>{selectedFoodDetails[`food_${_id}`].quantity}</span>
+                                <AddCircleOutlineIcon color="primary" sx={{cursor: "pointer"}} onClick={() => changeQuantity(_id, false, price)} />
+                            </div> 
+                            :
+                            <Button
                             variant="solid"
                             size="md"
                             color="primary"
                             aria-label="Explore Bahamas Islands"
                             sx={{ ml: 'auto', alignSelf: 'center', fontWeight: 600 }}
+                            onClick={() => handleFoodSelection(_id, title, 1, price)}
                           >
                             ADD
                           </Button>
+                          }
                         </CardContent>
                         </div>
                         </div>
@@ -166,7 +229,54 @@ const FoodBeverage = () => {
 
             {/* right container */}
             <div className="right_food_container">
-                <p>BOOKING SUMMARY</p>
+                <div className="booking_summary">
+                    <p className="booking_tag">BOOKING SUMMARY</p>
+                    <div className="flex_just">
+                        <p style={{fontSize: 14, fontWeight: 500}}>IN-{seatIN.map((ele, index) => index>0 ? `, ${ele}` : ele)} ({tickets} Tickets)</p> 
+                        <p style={{fontSize: 14, fontWeight: 500}}>Rs. {payment}.00</p>
+                    </div>
+                    <div className="convenience_container">
+                    <div className="flex_just">
+                        <p style={{fontSize: 12, fontWeight: 500}}> Convenience fees </p>
+                        <p style={{fontSize: 14}}>Rs.141.60</p>
+                    </div>
+                    <div className="flex_just">
+                        <p style={{fontSize: 10, color: "#969696"}}>Base Amount</p>
+                        <p style={{fontSize: 10, color: "#969696"}}>Rs. 120.00</p>   
+                    </div>
+                    <div className="flex_just">
+                        <p style={{fontSize: 10, color: "#969696"}}>Integrated GST (IGST) @ 18%</p>
+                        <p style={{fontSize: 10, color: "#969696"}}>Rs. 21.60</p>
+                    </div>
+                    </div>
+                    <div className="flex_just">
+                        <p style={{fontSize: 14, fontWeight: 500}}>Sub total</p>
+                        <p style={{fontSize: 14, fontWeight: 500}}>Rs. {(payment+141.60).toFixed(2)}</p>
+                    </div>
+                    <div className="food_beverage_amount">
+                    {
+                        foodAmount ? 
+                        <div className="flex_just">
+                        <p style={{fontSize: 14, fontWeight: 500}}>Food & Beveragel</p>
+                        <p style={{fontSize: 14, fontWeight: 500}}>Rs. {foodAmount}</p>
+                    </div>
+                    :
+                    <span></span>
+                    }
+                {
+                    selectedFood.map((ele) => {
+                        return <div className="flex_just">
+                            <p style={{fontSize: 10, color: "#969696"}}>{selectedFoodDetails[`${ele}`].title}({selectedFoodDetails[`${ele}`].quantity})</p>
+                            <p style={{fontSize: 10, color: "#969696"}}>Rs. {selectedFoodDetails[`${ele}`].price * selectedFoodDetails[`${ele}`].quantity}</p>
+                        </div>
+                    })
+                }
+                </div>
+                </div>
+                <div className="amount_payable flex_just">
+                    <p>Amount Payable</p>
+                    <p>{(payableAmount+141.60).toFixed(2)}</p>
+                </div>
             </div>
         </div>
     )
