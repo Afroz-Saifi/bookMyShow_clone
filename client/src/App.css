@@ -200,6 +200,29 @@
   font-size: 14px;
 }
 
+.food_beverage_container{
+  background-color: "#f2f2f2";
+  display: flex;
+  justify-content: space-between;
+}
+.left_food_container{
+  width: 68%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+.right_food_container{
+  width: 32%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.food_hub{
+  height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

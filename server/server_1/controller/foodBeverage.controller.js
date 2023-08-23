@@ -51,6 +51,13 @@ const getFoodById = async (req, res) => {
 const getFilteredFood = async (req, res) => {
   const { category } = req.params;
   try {
+    if(category=="ALL"){
+      const data = await FoodBeverage.find();
+      return res.status(200).json({
+          success: true,
+          data
+      })
+    }
     const data = await FoodBeverage.find({ category });
     return res.status(200).json({
         success: true,
