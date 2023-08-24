@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedDate, selectedTime }) => {
+const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedDate, selectedTime, cinemaName }) => {
   const navigate = useNavigate();
   const [selectedSeats, setSelectedSeats] = useState(1);
 
@@ -24,7 +24,7 @@ const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice
   const handleSeatsConfirmation = () => {
     onSelectSeats(selectedSeats);
     navigate("/buySeats", {
-      state: { _id,  selectedSeats, selectedDate, selectedTime}
+      state: { _id,  selectedSeats, selectedDate, selectedTime, cinemaName}
     })
     onClose();
   };

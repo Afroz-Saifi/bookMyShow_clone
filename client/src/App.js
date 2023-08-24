@@ -8,6 +8,7 @@ import MovieDescription from './components/MovieDescription';
 import BuyTickets from './pages/BuyTickets';
 import BuySeats from './pages/BuySeats';
 import FoodBeverage from './pages/FoodBeverage';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="buyTickets" element={<BuyTickets />} />
           <Route path='buySeats' element={<BuySeats />} />
           <Route path='foodBeverage' element={<FoodBeverage />} />
+          <Route path='payment' element={<PaymentPage />} />
         </Routes>
       </BrowserRouter>
     </div>

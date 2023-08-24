@@ -7,7 +7,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, CircularProg
 
 const BuySeats = () => {
     const location = useLocation();
-  const { _id, selectedSeats, selectedDate, selectedTime } = location.state;
+  const { _id, selectedSeats, selectedDate, selectedTime, cinemaName } = location.state;
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [showName, setShowName] = useState('');
@@ -34,13 +34,16 @@ const BuySeats = () => {
 
   const fetchBookings = async () => {
     try {
+        console.log(_id, selectedDate, selectedTime);
         const response = await axios.post(`${baseUrl}/bookings/getCinemaBookings`, {
             PvrId: _id,
             date: selectedDate, 
             time: selectedTime
         })
         if(response.data.success){
+            // console.log(response.data);
             const flattenedArray  = [].concat(...response.data.data[0].seats)
+            // console.log(flattenedArray);
             setBookings(flattenedArray)
         }
     } catch (error) {
@@ -53,26 +56,143 @@ const BuySeats = () => {
     fetchBookings()
   }, [])
 
-  const handleSeatSelector = (seatNo, row, quality) => {
-    // console.log(`${row}${seatNo}`);
-    if (selectedSeats === 1) {
-        setSelectedSeat([`${row}${seatNo}`]);
-      } else {
-        const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
-        const selectedIndex = selectedRow.indexOf(seatNo);
-        const selectedSeatsInRow = selectedRow.slice(
-          selectedIndex,
-          selectedIndex + selectedSeats
+//   const handleSeatSelector = (seatNo, row, quality) => {
+//     // console.log(`${row}${seatNo}`);
+//     if (selectedSeats === 1) {
+//         setSelectedSeat([`${row}${seatNo}`]);
+//       } else {
+//         const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
+//         const selectedIndex = selectedRow.indexOf(seatNo);
+//         const selectedSeatsInRow = selectedRow.slice(
+//           selectedIndex,
+//           selectedIndex + selectedSeats-(selectedSeat.length-1)
+//         );
+//         if(selectedSeatsInRow.length !== selectedSeats){
+//             if(selectedSeat.length==selectedSeats){
+//                 return;
+//             }
+//             const alreadyBookedSeats = selectedSeat;
+//             const selectedSeatsRemaining = selectedRow.slice(
+//                 selectedIndex,
+//                 selectedIndex + selectedSeats
+//               );
+//             alreadyBookedSeats.push(...selectedSeatsRemaining.map(s => `${row}${s}`))
+//             // const remaining=selectedSeatsInRow-selectedSeats
+//             // const moreIndex=selectedRow.indexOf(seatNo);
+//             // const moreSeats = selectedRow.slice(
+//             //     moreIndex,
+//             //     moreIndex + remaining
+//             //   );
+//             //   totalSeats=selectedSeatsInRow.map(s => `${row}${s}`)+moreSeats.map(s => `${row}${s}`)
+//             //   setSelectedSeat(totalSeats);
+//         }else{
+//             setSelectedSeat(selectedSeatsInRow.map(s => `${row}${s}`));
+//         }
+       
+//         // console.log(selectedSeatsInRow.map(s => `${row}${s}`));
+//     }
+//       setPaybutton(true);
+//       setPayment(selectedSeats*(quality==="VIP" ? cinemaData.VIP.price : quality==="Executive" ? cinemaData.Executive.price : cinemaData.Normal.price))
+//     }
+
+
+const clearHook = () => {
+    setSelectedSeat([]);
+}
+
+// const handleSeatSelector = (seatNo, row, quality) => {
+//     if (selectedSeat.length === selectedSeats){
+//         clearHook();
+//     }
+//     const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
+//     const selectedIndex = selectedRow.indexOf(seatNo);
+//     const selectedSeatsInRow = selectedRow.slice(
+//         selectedIndex,
+//         selectedIndex + (selectedSeats - selectedSeat.length)
+//     );
+//     console.log(selectedSeatsInRow);
+//     let filteredRows = [];
+//     for (let i = 0; i < selectedSeatsInRow.length; i++) {
+//         if (selectedSeatsInRow[i] === "#") {
+//             break;
+//         } else {
+//             filteredRows.push(selectedSeatsInRow[i])
+//         }
+//     }
+// console.log("filters  :",filteredRows);
+
+    
+//     let deep = [...selectedSeat, ...filteredRows.map(s => `${row}${s}`)]
+//     // if (selectedSeat.length === selectedSeats) {
+//     //     alert("working");
+//     //     deep = [];
+//     //     // setSelectedSeat(deep);
+//     //     clearHook();
+//     //     // handleSeatSelector(seatNo, row, quality)
+//     //     // return;
+//     // }
+//     setSelectedSeat(deep);
+
+//     if (deep.length === selectedSeats) {
+//         setPaybutton(true);
+//     } else {
+//         setPaybutton(false);
+//     }
+
+//     setPayment(selectedSeats * (quality === "VIP" ? cinemaData.VIP.price : quality === "Executive" ? cinemaData.Executive.price : cinemaData.Normal.price));
+// };
+
+
+const handleSeatSelector = (seatNo, row, quality) => {
+    // if (selectedSeat.length === selectedSeats){
+    //     clearHook();
+    // }
+    const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
+    const selectedIndex = selectedRow.indexOf(seatNo);
+    let selectedSeatsInRow = [];
+    if (selectedSeat.length === selectedSeats){
+        selectedSeatsInRow = selectedRow.slice(
+            selectedIndex,
+            selectedIndex + selectedSeats
         );
-        setSelectedSeat(selectedSeatsInRow.map(s => `${row}${s}`));
-      }
-      setPaybutton(true);
-      setPayment(selectedSeats*(quality==="VIP" ? cinemaData.VIP.price : quality==="Executive" ? cinemaData.Executive.price : cinemaData.Normal.price))
-  }
+    }else{
+        selectedSeatsInRow = selectedRow.slice(
+            selectedIndex,
+            selectedIndex + (selectedSeats - selectedSeat.length)
+        );
+    }
+    // console.log(selectedSeatsInRow);
+    let filteredRows = [];
+    for (let i = 0; i < selectedSeatsInRow.length; i++) {
+        if (selectedSeatsInRow[i] === "#") {
+            break;
+        } else {
+            filteredRows.push(selectedSeatsInRow[i])
+        }
+    }
+
+    let prevouseSeats = [...selectedSeat]
+
+    if(selectedSeat.length==selectedSeats){
+        setSelectedSeat(filteredRows.map(s => `${row}${s}`))
+        filteredRows.length == selectedSeats ? setPaybutton(true) : setPaybutton(false);
+    }else{
+        setSelectedSeat(prevSelectedSeats => [...prevSelectedSeats, ...filteredRows.map(s => `${row}${s}`)]);
+        if ((prevouseSeats.length+filteredRows.length) === selectedSeats) {
+            setPaybutton(true);
+        } 
+    }
+    setPayment(selectedSeats * (quality === "VIP" ? cinemaData.VIP.price : quality === "Executive" ? cinemaData.Executive.price : cinemaData.Normal.price));
+};
+
+
+
+
+console.log("hook: ", selectedSeat);
 
   const handleSeatsBooking = () => {
     navigate("/FoodBeverage", {
-        state: { _id, tickets: selectedSeats, selectedDate, selectedTime, payment, seatIN: selectedSeat, showName}
+        state: { _id, tickets: selectedSeats, selectedDate, selectedTime, payment, seatIN: selectedSeat, showName, cinemaName}
       })
   }
 

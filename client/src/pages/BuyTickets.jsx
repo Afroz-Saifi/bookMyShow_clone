@@ -163,6 +163,7 @@ const BuyTickets = () => {
         _id={selectedCinemaId}
         selectedDate={selectedDate}
         selectedTime={selectedSlot}
+        cinemaName={cinemaData.name}
       />
           </>
                          

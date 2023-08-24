@@ -1,5 +1,5 @@
 // LoginForm.js
-import React, { useState } from 'react';
+import React, { useDebugValue, useState } from 'react';
 import axios from 'axios';
 import {
   Dialog,
@@ -37,9 +37,8 @@ const LoginForm = ({ onClose, showUserName }) => {
       });
 
       if (response.data.success) {
-        const { user_name, token } = response.data;
-        localStorage.setItem('user_name', user_name);
-        localStorage.setItem('token', token);
+        const userData = response.data
+        localStorage.setItem('loggedUser', JSON.stringify(userData));
         showUserName();
         // Close the dialog or perform any other actions after successful login
         onClose();

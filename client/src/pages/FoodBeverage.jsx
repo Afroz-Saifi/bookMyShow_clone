@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/joy/Box';
 import Radio, { radioClasses } from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import axios from "axios";
-import AspectRatio from '@mui/joy/AspectRatio';
 import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -17,9 +16,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const FoodBeverage = () => {
     const location = useLocation();
-    const { _id, showName, tickets, selectedDate, selectedTime, payment, seatIN } = location.state;
-    const movieData = JSON.parse(localStorage.getItem('bookMovie'));
-    const movieName = movieData.title
+    const { _id, showName, tickets, selectedDate, selectedTime, payment, seatIN, cinemaName } = location.state;
+    const navigate = useNavigate();
     const [filter, setFilter] = useState('ALL');
     const [foodData, setFoodData] = useState([]);
     const [selectedFood, setSelectedFood] = useState([]);
@@ -82,6 +80,25 @@ const FoodBeverage = () => {
         const food_details_key = Object.keys(foodDetailsCopy);
         setSelectedFoodDetails(foodDetailsCopy)
         setSelectedFood(food_details_key);
+    }
+
+    const handlePaymentButton = () => {
+      navigate('/payment', {
+        state: {
+          _id, 
+          showName, 
+          tickets, 
+          selectedDate, 
+          selectedTime, 
+          payment, 
+          seatIN,
+          cinemaName,
+          selectedFoodDetails,
+          payableAmount,
+          foodAmount,
+          selectedFood
+        }
+      })
     }
 
     return (
@@ -268,7 +285,7 @@ const FoodBeverage = () => {
                 {
                     selectedFood.map((ele) => {
                         return <div className="flex_just">
-                            <p style={{fontSize: 10, color: "#969696"}}>{selectedFoodDetails[`${ele}`].title}({selectedFoodDetails[`${ele}`].quantity})</p>
+                            <p style={{fontSize: 10, color: "#969696"}}>{selectedFoodDetails[`${ele}`].title}<span style={{color: "#000", fontWeight: 500}}>(Qt. {selectedFoodDetails[`${ele}`].quantity})</span></p>
                             <p style={{fontSize: 10, color: "#969696"}}>Rs. {selectedFoodDetails[`${ele}`].price * selectedFoodDetails[`${ele}`].quantity}</p>
                         </div>
                     })
@@ -305,7 +322,7 @@ const FoodBeverage = () => {
                     '&:hover':{
                       backgroundColor: "#ef1a40"
                     }
-                  }}> <span>TOTAL: Rs. {(payableAmount+141.60).toFixed(2)}</span><span>Proceed</span></Button>
+                  }} onClick={handlePaymentButton}> <span>TOTAL: Rs. {(payableAmount+141.60).toFixed(2)}</span><span>Proceed</span></Button>
                   <p style={{
                     fontSize: "12px",
                     color: "#888c90",

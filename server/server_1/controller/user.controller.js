@@ -53,7 +53,7 @@ const loginUser = async (req, res) => {
           return res.status(200).json({
             success: true,
             msg: "login successfull",
-            user_name: data.username,
+            data,
             token: jwt.sign({ userId: data._id }, process.env.access_token, {
               expiresIn: "3h",
             }),

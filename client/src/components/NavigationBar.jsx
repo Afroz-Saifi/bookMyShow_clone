@@ -66,8 +66,8 @@ const NavigationBar = () => {
   };
 
   const showUsername = () => {
-    const user_name = localStorage.getItem("user_name");
-    setUserName(user_name);
+    const user_name = JSON.parse(localStorage.getItem("loggedUser")) ;
+    setUserName(user_name.data.username);
   }
 
   return (
