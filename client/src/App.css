@@ -204,8 +204,9 @@
   background-color: "#f2f2f2";
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
-  padding-top: 20px;
+  padding: 20px 0;
 }
 .left_food_container{
   width: 68%;
@@ -213,6 +214,8 @@
 }
 .right_food_container{
   width: 32%;
+}
+.right_food_container > div{
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 

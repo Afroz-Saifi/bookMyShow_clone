@@ -101,7 +101,7 @@ const BuySeats = () => {
         }
         </tbody>
     </table>
-    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>VIP-Rs. {cinemaData.Executive.price}.00</p>
+    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>EXECUTIVE-Rs. {cinemaData.Executive.price}.00</p>
                 <table className="seat_format" cellSpacing={"7px"}>
         <tbody>
             {
@@ -121,7 +121,7 @@ const BuySeats = () => {
         }
         </tbody>
     </table>
-    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>VIP-Rs. {cinemaData.Normal.price}.00</p>
+    <p style={{color: "#999", fontSize: "12px", marginBottom: "10px", borderBottom: "1px solid #ececec"}}>NORMAL-Rs. {cinemaData.Normal.price}.00</p>
                 <table className="seat_format" cellSpacing={"7px"}>
         <tbody>
             {

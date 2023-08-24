@@ -13,6 +13,7 @@ import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const FoodBeverage = () => {
     const location = useLocation();
@@ -229,6 +230,7 @@ const FoodBeverage = () => {
 
             {/* right container */}
             <div className="right_food_container">
+              <div>
                 <div className="booking_summary">
                     <p className="booking_tag">BOOKING SUMMARY</p>
                     <div className="flex_just">
@@ -276,6 +278,39 @@ const FoodBeverage = () => {
                 <div className="amount_payable flex_just">
                     <p>Amount Payable</p>
                     <p>{(payableAmount+141.60).toFixed(2)}</p>
+                </div>
+                </div>
+                <div style={{
+                  marginTop: "30px",
+                  padding: "10px"
+                }}>
+                  <p style={{
+                    fontSize: "12px",
+                    lineHeight: "16px",
+                    alignItems: "center",
+                    letterSpacing:" 0.2px",
+                    color: "#404040",
+                    display: "flex",
+                    alignItems: "flex-start"
+                  }}> <InfoOutlinedIcon sx={{
+                    fontSize: 18
+                  }} /> {'\u00A0'}By proceeding, I express my consent to complete this transaction.</p>
+                  <Button variant="solid" sx={{
+                    backgroundColor: "#f84464",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "90%",
+                    margin: "auto",
+                    fontSize: "18px",
+                    '&:hover':{
+                      backgroundColor: "#ef1a40"
+                    }
+                  }}> <span>TOTAL: Rs. {(payableAmount+141.60).toFixed(2)}</span><span>Proceed</span></Button>
+                  <p style={{
+                    fontSize: "12px",
+                    color: "#888c90",
+                    textAlign: "center"
+                  }}>You can cancel the tickets 4 hour(s) before the show. Refunds will be done according to Cancellation Policy</p>
                 </div>
             </div>
         </div>
