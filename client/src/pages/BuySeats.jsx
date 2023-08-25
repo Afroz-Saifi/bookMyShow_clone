@@ -56,97 +56,8 @@ const BuySeats = () => {
     fetchBookings()
   }, [])
 
-//   const handleSeatSelector = (seatNo, row, quality) => {
-//     // console.log(`${row}${seatNo}`);
-//     if (selectedSeats === 1) {
-//         setSelectedSeat([`${row}${seatNo}`]);
-//       } else {
-//         const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
-//         const selectedIndex = selectedRow.indexOf(seatNo);
-//         const selectedSeatsInRow = selectedRow.slice(
-//           selectedIndex,
-//           selectedIndex + selectedSeats-(selectedSeat.length-1)
-//         );
-//         if(selectedSeatsInRow.length !== selectedSeats){
-//             if(selectedSeat.length==selectedSeats){
-//                 return;
-//             }
-//             const alreadyBookedSeats = selectedSeat;
-//             const selectedSeatsRemaining = selectedRow.slice(
-//                 selectedIndex,
-//                 selectedIndex + selectedSeats
-//               );
-//             alreadyBookedSeats.push(...selectedSeatsRemaining.map(s => `${row}${s}`))
-//             // const remaining=selectedSeatsInRow-selectedSeats
-//             // const moreIndex=selectedRow.indexOf(seatNo);
-//             // const moreSeats = selectedRow.slice(
-//             //     moreIndex,
-//             //     moreIndex + remaining
-//             //   );
-//             //   totalSeats=selectedSeatsInRow.map(s => `${row}${s}`)+moreSeats.map(s => `${row}${s}`)
-//             //   setSelectedSeat(totalSeats);
-//         }else{
-//             setSelectedSeat(selectedSeatsInRow.map(s => `${row}${s}`));
-//         }
-       
-//         // console.log(selectedSeatsInRow.map(s => `${row}${s}`));
-//     }
-//       setPaybutton(true);
-//       setPayment(selectedSeats*(quality==="VIP" ? cinemaData.VIP.price : quality==="Executive" ? cinemaData.Executive.price : cinemaData.Normal.price))
-//     }
-
-
-const clearHook = () => {
-    setSelectedSeat([]);
-}
-
-// const handleSeatSelector = (seatNo, row, quality) => {
-//     if (selectedSeat.length === selectedSeats){
-//         clearHook();
-//     }
-//     const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
-//     const selectedIndex = selectedRow.indexOf(seatNo);
-//     const selectedSeatsInRow = selectedRow.slice(
-//         selectedIndex,
-//         selectedIndex + (selectedSeats - selectedSeat.length)
-//     );
-//     console.log(selectedSeatsInRow);
-//     let filteredRows = [];
-//     for (let i = 0; i < selectedSeatsInRow.length; i++) {
-//         if (selectedSeatsInRow[i] === "#") {
-//             break;
-//         } else {
-//             filteredRows.push(selectedSeatsInRow[i])
-//         }
-//     }
-// console.log("filters  :",filteredRows);
-
-    
-//     let deep = [...selectedSeat, ...filteredRows.map(s => `${row}${s}`)]
-//     // if (selectedSeat.length === selectedSeats) {
-//     //     alert("working");
-//     //     deep = [];
-//     //     // setSelectedSeat(deep);
-//     //     clearHook();
-//     //     // handleSeatSelector(seatNo, row, quality)
-//     //     // return;
-//     // }
-//     setSelectedSeat(deep);
-
-//     if (deep.length === selectedSeats) {
-//         setPaybutton(true);
-//     } else {
-//         setPaybutton(false);
-//     }
-
-//     setPayment(selectedSeats * (quality === "VIP" ? cinemaData.VIP.price : quality === "Executive" ? cinemaData.Executive.price : cinemaData.Normal.price));
-// };
-
 
 const handleSeatSelector = (seatNo, row, quality) => {
-    // if (selectedSeat.length === selectedSeats){
-    //     clearHook();
-    // }
     const selectedRow = cinemaData[`${quality}`].format.find(ele => ele[0] === row);
     const selectedIndex = selectedRow.indexOf(seatNo);
     let selectedSeatsInRow = [];
@@ -164,7 +75,7 @@ const handleSeatSelector = (seatNo, row, quality) => {
     // console.log(selectedSeatsInRow);
     let filteredRows = [];
     for (let i = 0; i < selectedSeatsInRow.length; i++) {
-        if (selectedSeatsInRow[i] === "#") {
+        if (selectedSeatsInRow[i] === "#" || bookings.includes(`${row}${selectedSeatsInRow[i]}`)) {
             break;
         } else {
             filteredRows.push(selectedSeatsInRow[i])
