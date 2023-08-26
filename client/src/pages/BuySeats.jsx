@@ -3,22 +3,25 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import screen from '../images/screen.png'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, Alert } from "@mui/material";
 
 const BuySeats = () => {
     const location = useLocation();
   const { _id, selectedSeats, selectedDate, selectedTime, cinemaName } = location.state;
   const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
   const [openDialog, setOpenDialog] = useState(false);
   const [showName, setShowName] = useState('');
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; // Provide default values for destructuring  const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
+    const moviData = JSON.parse(localStorage.getItem("bookMovie")) || '';
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [cinemaData, setCinemaData] = useState(null);
   const [payButton, setPaybutton] = useState(false);
   const [payment, setPayment] = useState(null)
   const [bookings, setBookings] = useState([])
-  const baseUrl = "http://localhost:8000"
+//   const baseUrl = "http://localhost:8000"
+  const baseUrl = "https://showvibes.onrender.com"
 
   const fetchCinema = async () => {
     try {
@@ -38,7 +41,8 @@ const BuySeats = () => {
         const response = await axios.post(`${baseUrl}/bookings/getCinemaBookings`, {
             PvrId: _id,
             date: selectedDate, 
-            time: selectedTime
+            time: selectedTime,
+            movieId: moviData._id
         })
         if(response.data.success){
             // console.log(response.data);
@@ -108,7 +112,9 @@ console.log("hook: ", selectedSeat);
   }
 
   return (
-    <div className="cinema_seats_container">
+    <>
+    {
+        userData ? <div className="cinema_seats_container">
         {
             cinemaData ? 
             <div>
@@ -223,7 +229,10 @@ console.log("hook: ", selectedSeat);
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </div> : <Alert severity="error">Please Login !</Alert>
+    }
+    </>
+    
   );
 }
 

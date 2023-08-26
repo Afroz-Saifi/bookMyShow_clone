@@ -1,3 +1,4 @@
+import { Alert, AlertTitle } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
@@ -8,12 +9,15 @@ const PaymentPage = () => {
     const moviData = JSON.parse(localStorage.getItem("bookMovie")) || '';
     const langFormat = JSON.parse(localStorage.getItem("langFormat")) || '';
     const userData = JSON.parse(localStorage.getItem('loggedUser')) || '';
-    const [userMobile, setUserMobile] = useState('+91 ');
+    const [userMobile, setUserMobile] = useState('+91');
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
     const [cardExp, setCardExp] = useState('');
     const [cardCvv, setCardCvv] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successPayment, setSuccessPayment] = useState('');
     const baseUrl = "http://localhost:8000/bookings/book"
+    // const baseUrl = "https://showvibes.onrender.com/bookings/book"
 
     const handleCardChange = (event) => {
         const { value } = event.target;
@@ -28,24 +32,44 @@ const PaymentPage = () => {
 
       const handleMakePayment = async (e) => {
         e.preventDefault();
+        if(userMobile.length!=13){
+            setErrorMessage("Invalid mobile number");
+            return
+        }
         try {
-            const response = await axios.post(baseUrl, {
+            const response = await axios.post(`${baseUrl}?email=${userData.data.email}&mobile=${userMobile}`, {
                 PvrId: _id,
                 date: selectedDate,
                 time: selectedTime,
                 seat: seatIN,
-                userId: userData.data._id
+                userId: userData.data._id,
+                showName: moviData.title,
+                showImage: moviData.Poster,
+                foodAndBeverage: selectedFoodDetails,
+                langFormat: langFormat,
+                cinemaName: showName,
+                payment: (payableAmount+141.60).toFixed(2),
+                movieId: moviData._id
             })
             if(response.data.success){
-                alert('movie booked successfully')
+                setErrorMessage('');
+                setSuccessPayment('Please check you mail')
             }
         } catch (error) {
             console.log(error.message);
         }
       }
 
-    return <div className="payment_bill_container">
+    return (
+        <>
+        {
+            userData ? <div className="payment_bill_container">
         <div className="left_payment_container">
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+        {successPayment && <Alert severity="success">
+  <AlertTitle>Movie Booked</AlertTitle>
+  Please check your — <strong>Email and SMS</strong>
+</Alert>}
             <form onSubmit={(e) => handleMakePayment(e)}>
                 <div className="contack_details">
                     <p className="payment_form_title">Share your Contact Details</p>
@@ -151,7 +175,11 @@ const PaymentPage = () => {
                 </div>
                 </div>
             </div>
-    </div>
+    </div> : <Alert severity="error">Please Login !</Alert>
+        }
+        </>
+    
+    )
 }
 
 export default PaymentPage;

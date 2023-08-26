@@ -1,5 +1,5 @@
 // NavigationBar.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import mainLogo from '../images/main_logo.png'
@@ -66,16 +66,25 @@ const NavigationBar = () => {
   };
 
   const showUsername = () => {
-    const user_name = JSON.parse(localStorage.getItem("loggedUser")) ;
-    setUserName(user_name.data.username);
+    const user_name = JSON.parse(localStorage.getItem("loggedUser")) || '';
+    setUserName(user_name ? user_name.data.username : '');
   }
+
+  const handleLogout = () => {
+    setUserName('');
+    localStorage.clear();
+  }
+
+  useEffect(() => {
+      showUsername();
+  }, [])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-            <img src={mainLogo} style={{ width: '100px' }} />
-          <Search>
+            <img src={mainLogo} className='main_logo' />
+          <Search className='search_icon'>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -91,7 +100,11 @@ const NavigationBar = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
           </Typography>
-          {userName ? <p>{userName}</p> : <Button variant="contained" onClick={toggleLoginForm}>Login</Button>}
+          {userName ? <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}><p style={{marginRight: "10px"}}>{userName}</p> <Button variant='contained' onClick={handleLogout}>LOGOUT</Button> </div>  : <Button variant="contained" onClick={toggleLoginForm}>Login</Button>}
         </Toolbar>
       </AppBar>
       {showLoginForm && <LoginForm onClose={toggleLoginForm} showUserName={showUsername} />}

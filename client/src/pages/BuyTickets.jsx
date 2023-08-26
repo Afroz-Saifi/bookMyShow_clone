@@ -7,6 +7,7 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import SeatSelectorPopup from "../components/SeatSelectorPopup";
+import { Alert } from "@mui/material";
 
 const getDateAtIndex = (index) => {
     const today = new Date();
@@ -30,6 +31,7 @@ const getDateAtIndex = (index) => {
 
 
 const BuyTickets = () => {
+  const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; 
     const [selectedCinemaId, setSelectedCinemaId] = useState(null)
@@ -48,7 +50,8 @@ const BuyTickets = () => {
   const [normalPrice, setNormalPrice] = useState(null);
   const [vipPrice, setVipPrice] = useState(null);
   const [executivePrice, setExecutivePrice] = useState(null);
-  const baseUrl = "http://localhost:8000/cinema"
+  // const baseUrl = "http://localhost:8000/cinema"
+  const baseUrl = "https://showvibes.onrender.com/cinema"
 
   const handleDateClick = (index) => {
     if (selectedBox === index) {
@@ -112,7 +115,9 @@ const BuyTickets = () => {
   };
 
   return (
-    <div>
+    <>
+    {
+      userData ? <div>
     <Box display="flex" justifyContent="space-between" padding="10px" sx={{width: 250}}>
       {dates.map((date, index) => (
         <DateBox
@@ -148,8 +153,9 @@ const BuyTickets = () => {
             key={time}
             variant="outlined"
             disabled={isTimePassed}
+            className="timing_button"
             onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price, _id)}
-            style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "red" : null }}
+            style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "#4142436d" : null }}
           >
             {time}
           </Button> 
@@ -175,7 +181,10 @@ const BuyTickets = () => {
             </div>)
         }
     </div>
-    </div>
+    </div> : <Alert severity="error">Please Login !</Alert>
+    }
+    </>
+    
   );
 }
 

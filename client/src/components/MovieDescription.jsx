@@ -8,7 +8,8 @@ const MovieDescription = () => {
     const navigate = useNavigate();
     const [movieDescription, setMovieDescription] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
-    const baseUrl = "http://localhost:8000/movies/description"
+    // const baseUrl = "http://localhost:8000/movies/description"
+    const baseUrl = "https://showvibes.onrender.com/movies/description"
     const quality = ["2D, ICE, MX4D, 4DX, IMAX 2D", "2D", "2D, 3D, 4DX", "2D, IMAX"]
     const languages = ["English, Hindi, Tamil, Telugu", "English", "English, Hindi", "Hindi", "Hindi, English, Tamil", "Tamil, English, Hindi"]
     const duration = ["2h 7m", "1h 55m", "2h 12m", "2h 44m", "3h 1m", "3h 10m"]
@@ -31,8 +32,13 @@ const MovieDescription = () => {
     }, [])
 
     const handleLangFormat = ({language, format}) => {
-        localStorage.setItem("langFormat", JSON.stringify({language, format}))
-        navigate("/buyTickets")
+        const userData = JSON.parse(localStorage.getItem('loggedUser')) || '';
+        if(!userData){
+          alert("Please login first !")
+        }else{
+          localStorage.setItem("langFormat", JSON.stringify({language, format}))
+          navigate("/buyTickets")
+        }
     }
 
     return (

@@ -13,7 +13,8 @@ const RegistrationForm = ({ toggleForms }) => {
   const [loadingOtp, setLoadingOtp] = useState(false);
   const [registrationToken, setRegistrationToken] = useState('')
 
-  const baseUrl = "http://localhost:8000/users"
+  // const baseUrl = "http://localhost:8000/users"
+  const baseUrl = "https://showvibes.onrender.com/users"
 
   const handleRegistration = async () => {
     setLoading(true);

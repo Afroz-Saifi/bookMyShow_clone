@@ -9,6 +9,7 @@ import BuyTickets from './pages/BuyTickets';
 import BuySeats from './pages/BuySeats';
 import FoodBeverage from './pages/FoodBeverage';
 import PaymentPage from './pages/PaymentPage';
+import Qrcode from './pages/Qrcode';
 
 function App() {
   return (
@@ -18,12 +19,13 @@ function App() {
       <NavigationBar />
         <Routes>
           <Route path="/" element={<Movies />} />
-          <Route path="userdashborad" element={<UserDashboard />} />
+          <Route path="userdashboard" element={<UserDashboard />} />
           <Route path="movieDescription/:id" element={<MovieDescription />} />
           <Route path="buyTickets" element={<BuyTickets />} />
           <Route path='buySeats' element={<BuySeats />} />
           <Route path='foodBeverage' element={<FoodBeverage />} />
           <Route path='payment' element={<PaymentPage />} />
+          <Route path='qrcode/:id' element={<Qrcode />} />
         </Routes>
       </BrowserRouter>
     </div>

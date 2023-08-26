@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const Movies = () => {
     const navigate = useNavigate();
     const [movieData, setMovieData] = useState([]);
-    const baseUrl = "http://localhost:8000/movies"
+    // const baseUrl = "http://localhost:8000/movies"
+    const baseUrl = "https://showvibes.onrender.com/movies"
 
     const fetchMovies = async () => {
         try {
@@ -34,7 +35,7 @@ const Movies = () => {
         <div className='movies_container'>
             {
                 movieData.map(({title, Poster, Genre, _id}) => <Card sx={{ width: 230 }} onClick={() => handleDescription(_id)} key={_id}>
-                <CardActionArea>
+                <CardActionArea id='movies_cart_container'>
                   <img src={Poster} className='movie_poster' />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

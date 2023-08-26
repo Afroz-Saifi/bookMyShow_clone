@@ -25,6 +25,32 @@ const bookingSchema = new mongoose.Schema({
     required: true,
     ref: "User", // Reference to another model if needed
   },
+  movieId: {
+    type: String,
+    required: true,
+    ref: "movie"
+  },
+  QRcode: {
+    type: String
+  },
+  showName: {
+    type: String
+  },
+  showImage: {
+    type: String
+  },
+  foodAndBeverage: {
+    type: Object
+  },
+  langFormat: {
+    type: Object
+  },
+  cinemaName: {
+    type: String
+  },
+  payment: {
+    type: Number
+  }
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);

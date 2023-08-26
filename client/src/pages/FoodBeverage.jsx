@@ -13,8 +13,10 @@ import Typography from '@mui/joy/Typography';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Alert } from "@mui/material";
 
 const FoodBeverage = () => {
+  const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
     const location = useLocation();
     const { _id, showName, tickets, selectedDate, selectedTime, payment, seatIN, cinemaName } = location.state;
     const navigate = useNavigate();
@@ -25,7 +27,8 @@ const FoodBeverage = () => {
     const [payableAmount, setPayableAmount] = useState(payment);
     const [foodAmount, setFoddAmount] = useState(0);
 
-    const baseUrl = "http://localhost:8000/food/category"
+    // const baseUrl = "http://localhost:8000/food/category"
+    const baseUrl = "https://showvibes.onrender.com/food/category"
 
     const fetchFood = async (category) => {
         try {
@@ -102,7 +105,9 @@ const FoodBeverage = () => {
     }
 
     return (
-        <div className="food_beverage_container">
+      <>
+      {
+        userData ? <div className="food_beverage_container">
             <div className="left_food_container">
                 <img src="https://assets-in.bmscdn.com/promotions/cms/creatives/1688188454571_855x95.jpg" alt="" />
                 <h2 style={{
@@ -330,7 +335,10 @@ const FoodBeverage = () => {
                   }}>You can cancel the tickets 4 hour(s) before the show. Refunds will be done according to Cancellation Policy</p>
                 </div>
             </div>
-        </div>
+        </div> : <Alert severity="error">Please Login !</Alert>
+      }
+      </>
+        
     )
 }
 

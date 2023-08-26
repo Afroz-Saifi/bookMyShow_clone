@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 
 const SeatSelectorPopup = ({ open, onClose, onSelectSeats, normalPrice, vipPrice, executivePrice, _id, selectedDate, selectedTime, cinemaName }) => {
