@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CircularProgress  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Movies = () => {
     const navigate = useNavigate();
     const [movieData, setMovieData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     // const baseUrl = "http://localhost:8000/movies"
     const baseUrl = "https://showvibes.onrender.com/movies"
 
@@ -20,6 +21,9 @@ const Movies = () => {
             }
         } catch (error) {
             console.log(error.message);
+        }
+        finally{
+          setIsLoading(false);
         }
     }
 
@@ -34,6 +38,12 @@ const Movies = () => {
     return (
         <div className='movies_container'>
             {
+              isLoading ? (
+                // Display loader while loading
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress />
+                </div>
+              ) : (
                 movieData.map(({title, Poster, Genre, _id}) => <Card sx={{ width: 230 }} onClick={() => handleDescription(_id)} key={_id}>
                 <CardActionArea id='movies_cart_container'>
                   <img src={Poster} className='movie_poster' />
@@ -47,6 +57,7 @@ const Movies = () => {
                   </CardContent>
                 </CardActionArea>
               </Card>)
+              )
             }
         </div>
     )
