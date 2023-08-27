@@ -35,9 +35,10 @@ const BuySeats = () => {
     }
   }
 
+  console.log(selectedDate);
+
   const fetchBookings = async () => {
     try {
-        console.log(_id, selectedDate, selectedTime);
         const response = await axios.post(`${baseUrl}/bookings/getCinemaBookings`, {
             PvrId: _id,
             date: selectedDate, 
@@ -47,7 +48,6 @@ const BuySeats = () => {
         if(response.data.success){
             // console.log(response.data);
             const flattenedArray  = [].concat(...response.data.data[0].seats)
-            // console.log(flattenedArray);
             setBookings(flattenedArray)
         }
     } catch (error) {

@@ -10,6 +10,7 @@ import BuySeats from './pages/BuySeats';
 import FoodBeverage from './pages/FoodBeverage';
 import PaymentPage from './pages/PaymentPage';
 import Qrcode from './pages/Qrcode';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='payment' element={<PaymentPage />} />
           <Route path='qrcode/:id' element={<Qrcode />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );

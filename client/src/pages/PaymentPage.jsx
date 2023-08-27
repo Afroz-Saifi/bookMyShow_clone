@@ -16,8 +16,8 @@ const PaymentPage = () => {
     const [cardCvv, setCardCvv] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successPayment, setSuccessPayment] = useState('');
-    const baseUrl = "http://localhost:8000/bookings/book"
-    // const baseUrl = "https://showvibes.onrender.com/bookings/book"
+    // const baseUrl = "http://localhost:8000/bookings/book"
+    const baseUrl = "https://showvibes.onrender.com/bookings/book"
 
     const handleCardChange = (event) => {
         const { value } = event.target;

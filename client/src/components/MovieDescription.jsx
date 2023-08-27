@@ -67,6 +67,15 @@ const MovieDescription = () => {
                 </div>
             </div>
 
+<p style={{
+  textAlign: "center",
+      width: "100%",
+      backgroundColor: "rgb(243, 243, 243)",
+      padding: "20px",
+      marginTop: "30px",
+      margin: 0
+}}>{movieDescription.description}</p>
+
             <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
   <DialogContent>
     <p>{movieDescription.title}</p>

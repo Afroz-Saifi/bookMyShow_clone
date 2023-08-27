@@ -21,8 +21,6 @@ const makeBooking = async (req, res) => {
     const qrCodeBase64 = qrCodeBuffer.toString("base64");
     const bookingDetails = new Booking({ ...data, QRcode: qrCodeBase64 });
     await bookingDetails.save();
-    const dateString = bookingDetails.date;
-    const dateObject = new Date(dateString);
 
     // food
     const selectedFoodDetails = data.foodAndBeverage;
@@ -44,12 +42,7 @@ const makeBooking = async (req, res) => {
       )
       .join("");
     //food ends
-
-    const day = dateObject.getUTCDate();
-    const month = dateObject.getUTCMonth() + 1; // Month is 0-based, so add 1
-    const year = dateObject.getUTCFullYear();
-
-    const formattedDate = `${day}/${month}/${year}`;
+const formattedDate = data.date
     sendBookingUpdate(
       bookingDetails,
       email,
