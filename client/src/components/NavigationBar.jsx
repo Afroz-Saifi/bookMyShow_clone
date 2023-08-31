@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -58,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [userName, setUserName] = useState('');
 
@@ -73,6 +75,7 @@ const NavigationBar = () => {
   const handleLogout = () => {
     setUserName('');
     localStorage.clear();
+    navigate("/")
   }
 
   useEffect(() => {
