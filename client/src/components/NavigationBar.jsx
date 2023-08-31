@@ -62,6 +62,7 @@ const NavigationBar = () => {
   const navigate = useNavigate();
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState(null);
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
@@ -70,12 +71,17 @@ const NavigationBar = () => {
   const showUsername = () => {
     const user_name = JSON.parse(localStorage.getItem("loggedUser")) || '';
     setUserName(user_name ? user_name.data.username : '');
+    setUserId(user_name.data._id)
   }
 
   const handleLogout = () => {
     setUserName('');
     localStorage.clear();
     navigate("/")
+  }
+
+  const handleDashboard = () => {
+    navigate(`/user_dashboard/${userId}`)
   }
 
   useEffect(() => {
@@ -107,7 +113,7 @@ const NavigationBar = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center"
-          }}><p style={{marginRight: "10px"}}>{userName}</p> <Button variant='contained' onClick={handleLogout}>LOGOUT</Button> </div>  : <Button variant="contained" onClick={toggleLoginForm}>Login</Button>}
+          }}><p style={{marginRight: "10px", cursor: "pointer"}}>{userName}</p> <Button variant='contained' onClick={handleDashboard}> MY BOOKINGS </Button> <Button variant='contained' onClick={handleLogout}>LOGOUT</Button> </div>  : <Button variant="contained" onClick={toggleLoginForm}>Login</Button>}
         </Toolbar>
       </AppBar>
       {showLoginForm && <LoginForm onClose={toggleLoginForm} showUserName={showUsername} />}

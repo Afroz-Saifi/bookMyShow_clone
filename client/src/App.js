@@ -27,6 +27,7 @@ function App() {
           <Route path='foodBeverage' element={<FoodBeverage />} />
           <Route path='payment' element={<PaymentPage />} />
           <Route path='qrcode/:id' element={<Qrcode />} />
+          <Route path='user_dashboard/:id' element={<UserDashboard />} />
         </Routes>
         <Footer />
       </BrowserRouter>

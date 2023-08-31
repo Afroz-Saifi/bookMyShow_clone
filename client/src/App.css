@@ -7,6 +7,7 @@
   padding: 0;
 }
 
+
 .description_meta{
  font-size: 12px;
  color: #666666;
@@ -46,7 +47,7 @@
   padding: 20px;
   /* background-color: #282c34; */
   background: rgb(40,44,52);
-/* background: linear-gradient(90deg, rgba(40,44,52,1) 0%, rgba(40,44,52,0.5557825425091911) 100%);   */
+  /* background: linear-gradient(90deg, rgba(40,44,52,1) 0%, rgba(40,44,52,0.5557825425091911) 100%);   */
 }
 
 .description_poster{
@@ -140,20 +141,20 @@
 }
 
 .info_cinema{
-   display: flex;
-   align-items: center;
-   cursor: pointer;
-   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
    font-size: 14px;
    color: #34373c;
-}
-
-.rate_container {
-  display: flex;
-  text-align: center;
-  width: 100%;
-  justify-content: center;
-  gap: 20px;
+  }
+  
+  .rate_container {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
   border-top: 1px solid #37393c5b;
   padding-top: 20px;
   margin-top: 20px;
@@ -248,20 +249,20 @@
 }
 .booking_summary .booking_tag{
   font-size: 14px;
-    font-weight: 300;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
     text-align: left;
     color: #c02c39;
-}
-.flex_just{
-  display: flex;
-  justify-content: space-between;
-}
-
-.convenience_container *{
-  margin: 0;
+  }
+  .flex_just{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .convenience_container *{
+    margin: 0;
 }
 .convenience_container{
   padding: 10px 0;
@@ -322,6 +323,34 @@
   }
 }
 
+.dashboard_main_container{
+  display: flex;
+  flex-wrap: wrap; /* Reverse both row and column */
+  gap: 20px;
+  justify-content: center; /* Adjust as needed */
+  padding: 20px;
+}
+
+.dashboard_cards{
+  height: 372px;
+}
+
+.dashboard_cards *{
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard_cards img{
+  width: 50%;
+  height: 100;
+  /* border: 1px solid red; */
+  object-fit: cover;
+}
+
+.card_images_container{
+  display: flex;
+}
+
 
 @media (max-width: 768px) {
   .main_logo{
@@ -358,9 +387,9 @@
   .timing_button{
     margin: 0;
   }
-
+  
   .info_cinema{
-     display: none;
+    display: none;
   }
   .seat_format{
     /* width: 100vw; */
