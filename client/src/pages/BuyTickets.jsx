@@ -43,6 +43,7 @@ const BuyTickets = () => {
       const dates = [today, getDateAtIndex(1), getDateAtIndex(2), getDateAtIndex(3)];
       const [selectedBox, setSelectedBox] = useState(0);
       const [selectedDate, setSelectedDate] = useState(dates[0].toDateString())
+      const previousDate = dates[0].toDateString()
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [cinemaData, setCinemaData] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -145,7 +146,7 @@ const BuyTickets = () => {
                 <div className="right_cinema">
                 <div>
       {scheduleTimes.map(time => {        
-        const isTimePassed = compareTime(time)
+        const isTimePassed = (selectedDate==dates[0].toDateString() && compareTime(time))
 
         return (
             <>
