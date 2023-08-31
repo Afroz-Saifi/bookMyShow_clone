@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertTitle, CircularProgress, Button } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
@@ -16,6 +16,7 @@ const PaymentPage = () => {
     const [cardCvv, setCardCvv] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successPayment, setSuccessPayment] = useState('');
+    const [loading, setLoading] = useState(false);
     // const baseUrl = "http://localhost:8000/bookings/book"
     const baseUrl = "https://showvibes.onrender.com/bookings/book"
 
@@ -31,6 +32,7 @@ const PaymentPage = () => {
       };
 
       const handleMakePayment = async (e) => {
+        setLoading(true);
         e.preventDefault();
         if(userMobile.length!=13){
             setErrorMessage("Invalid mobile number");
@@ -58,6 +60,7 @@ const PaymentPage = () => {
         } catch (error) {
             console.log(error.message);
         }
+        setLoading(false)
       }
 
     return (
@@ -96,7 +99,9 @@ const PaymentPage = () => {
                         borderRadius: "4px",
                         cursor: "pointer",
                         marginTop: "20px"
-                    }}>MAKE PAYMENT</button>
+                    }}> 
+                    {loading ? <CircularProgress color='secondary' size={24} /> : 'MAKE PAYMENT'} 
+                    </button>
                 </div>
             </form>
         </div>

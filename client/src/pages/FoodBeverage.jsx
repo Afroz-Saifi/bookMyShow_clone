@@ -13,7 +13,7 @@ import Typography from '@mui/joy/Typography';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 const FoodBeverage = () => {
   const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
@@ -26,11 +26,13 @@ const FoodBeverage = () => {
     const [selectedFoodDetails, setSelectedFoodDetails] = useState({});
     const [payableAmount, setPayableAmount] = useState(payment);
     const [foodAmount, setFoddAmount] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     // const baseUrl = "http://localhost:8000/food/category"
     const baseUrl = "https://showvibes.onrender.com/food/category"
 
     const fetchFood = async (category) => {
+      setIsLoading(true);
         try {
             const response = await axios(`${baseUrl}/${category}`)
             if(response.data.success){
@@ -38,6 +40,9 @@ const FoodBeverage = () => {
             }
         } catch (error) {
             console.log(error.message);
+        }
+        finally{
+          setIsLoading(false);
         }
     }
 
@@ -176,6 +181,12 @@ const FoodBeverage = () => {
     </RadioGroup>
                 <div className="food_hub">
                     {
+                      isLoading ? (
+                        // Display loader while loading
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                            <CircularProgress />
+                        </div>
+                      ) :
                         foodData.map(({title, category, _id, subtitle, price, image}) => <Card variant="outlined" sx={{ width: 390 }}>
                             <div style={{
                                 display: "flex",

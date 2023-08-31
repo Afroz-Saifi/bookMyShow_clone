@@ -7,7 +7,7 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import SeatSelectorPopup from "../components/SeatSelectorPopup";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 const getDateAtIndex = (index) => {
     const today = new Date();
@@ -51,6 +51,7 @@ const BuyTickets = () => {
   const [normalPrice, setNormalPrice] = useState(null);
   const [vipPrice, setVipPrice] = useState(null);
   const [executivePrice, setExecutivePrice] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   // const baseUrl = "http://localhost:8000/cinema"
   const baseUrl = "https://showvibes.onrender.com/cinema"
 
@@ -72,6 +73,9 @@ const BuyTickets = () => {
         }
     } catch (error) {
         console.log(error.message);
+    }
+    finally{
+      setIsLoading(false);
     }
   }
 
@@ -118,74 +122,83 @@ const BuyTickets = () => {
   return (
     <>
     {
-      userData ? <div>
-    <Box display="flex" justifyContent="space-between" padding="10px" sx={{width: 250}}>
-      {dates.map((date, index) => (
-        <DateBox
-        key={index}
-        date={date}
-        selected={selectedBox === index}
-        onClick={() => handleDateClick(index)}
-      />
-      ))}
-    </Box>
-    <div className="cinema_container">
-        {
-            cinemaData.map(({name, Normal, Executive, VIP, _id}) => <div key={_id}>
-                <div className="left_cinema">
-                    <p>{name}</p>
-                    <div>
-                        <div><SendToMobileIcon sx={{color: "#49ba8e"}} /> <span style={{color: "#49ba8e"}}>M-Ticket</span></div>
-                    <div style={{marginLeft: "14px"}}><FastfoodIcon sx={{color: "orange"}} /> <span style={{color: "orange"}}>Food & Beverage</span> </div>
-                    </div>
-                    
-                </div>
-                <div className="info_cinema">
-                    <InfoOutlinedIcon /> <span>INFO</span> 
-                </div>
-                <div className="right_cinema">
-                <div>
-      {scheduleTimes.map(time => {        
-        const isTimePassed = (selectedDate==dates[0].toDateString() && compareTime(time))
-
-        return (
-            <>
-            <Button
-            key={time}
-            variant="outlined"
-            disabled={isTimePassed}
-            className="timing_button"
-            onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price, _id)}
-            style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "#4142436d" : null }}
-          >
-            {time}
-          </Button> 
-          <SeatSelectorPopup
-        open={popupOpen}
-        onClose={handlePopupClose}
-        onSelectSeats={handleSelectSeats}
-        normalPrice={normalPrice}
-        vipPrice={vipPrice}
-        executivePrice={executivePrice}
-        _id={selectedCinemaId}
-        selectedDate={selectedDate}
-        selectedTime={selectedSlot}
-        cinemaName={cinemaData.name}
-      />
-          </>
-                         
-          );
-        })}
-    </div>
-        <span style={{color: "orange", fontSize: "30px"}}>•&nbsp;<span style={{fontSize: "14px", color: "#32343b8c"}}>Non-cancellable</span></span>  
-                </div>
-            </div>)
-        }
-    </div>
-    </div> : <Alert severity="error">Please Login !</Alert>
+      isLoading ? (
+        // Display loader while loading
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <CircularProgress />
+        </div>
+      ) :
+      <>
+      {
+        userData ? <div>
+      <Box display="flex" justifyContent="space-between" padding="10px" sx={{width: 250}}>
+        {dates.map((date, index) => (
+          <DateBox
+          key={index}
+          date={date}
+          selected={selectedBox === index}
+          onClick={() => handleDateClick(index)}
+        />
+        ))}
+      </Box>
+      <div className="cinema_container">
+          {
+              cinemaData.map(({name, Normal, Executive, VIP, _id}) => <div key={_id}>
+                  <div className="left_cinema">
+                      <p>{name}</p>
+                      <div>
+                          <div><SendToMobileIcon sx={{color: "#49ba8e"}} /> <span style={{color: "#49ba8e"}}>M-Ticket</span></div>
+                      <div style={{marginLeft: "14px"}}><FastfoodIcon sx={{color: "orange"}} /> <span style={{color: "orange"}}>Food & Beverage</span> </div>
+                      </div>
+                      
+                  </div>
+                  <div className="info_cinema">
+                      <InfoOutlinedIcon /> <span>INFO</span> 
+                  </div>
+                  <div className="right_cinema">
+                  <div>
+        {scheduleTimes.map(time => {        
+          const isTimePassed = (selectedDate==dates[0].toDateString() && compareTime(time))
+  
+          return (
+              <>
+              <Button
+              key={time}
+              variant="outlined"
+              disabled={isTimePassed}
+              className="timing_button"
+              onClick={() => !isTimePassed && handleTimeClick(time, Normal.price, VIP.price, Executive.price, _id)}
+              style={{ margin: '10px', borderColor: '#49ba8e', color: isTimePassed ? "#fff" : "#49ba8e", backgroundColor: isTimePassed ? "#4142436d" : null }}
+            >
+              {time}
+            </Button> 
+            <SeatSelectorPopup
+          open={popupOpen}
+          onClose={handlePopupClose}
+          onSelectSeats={handleSelectSeats}
+          normalPrice={normalPrice}
+          vipPrice={vipPrice}
+          executivePrice={executivePrice}
+          _id={selectedCinemaId}
+          selectedDate={selectedDate}
+          selectedTime={selectedSlot}
+          cinemaName={cinemaData.name}
+        />
+            </>
+                           
+            );
+          })}
+      </div>
+          <span style={{color: "orange", fontSize: "30px"}}>•&nbsp;<span style={{fontSize: "14px", color: "#32343b8c"}}>Non-cancellable</span></span>  
+                  </div>
+              </div>)
+          }
+      </div>
+      </div> : <Alert severity="error">Please Login !</Alert>
+      }
+      </>
     }
     </>
-    
   );
 }
 

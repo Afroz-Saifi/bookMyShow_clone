@@ -20,6 +20,7 @@ const BuySeats = () => {
   const [payButton, setPaybutton] = useState(false);
   const [payment, setPayment] = useState(null)
   const [bookings, setBookings] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
 //   const baseUrl = "http://localhost:8000"
   const baseUrl = "https://showvibes.onrender.com"
 
@@ -53,6 +54,9 @@ const BuySeats = () => {
     } catch (error) {
         console.log(error.message);
     }
+    finally{
+        setIsLoading(false);
+      }
   }
 
   useEffect(() => {
@@ -112,6 +116,14 @@ console.log("hook: ", selectedSeat);
   }
 
   return (
+    <>
+    {
+        isLoading ? (
+            // Display loader while loading
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </div>
+          ) :
     <>
     {
         userData ? <div className="cinema_seats_container">
@@ -231,8 +243,9 @@ console.log("hook: ", selectedSeat);
       </Dialog>
     </div> : <Alert severity="error">Please Login !</Alert>
     }
+    </>   
+    }
     </>
-    
   );
 }
 
