@@ -18,7 +18,7 @@ const BuySeats = () => {
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [cinemaData, setCinemaData] = useState(null);
   const [payButton, setPaybutton] = useState(false);
-  const [payment, setPayment] = useState(null)
+  const [payment, setPayment] = useState(null)  
   const [bookings, setBookings] = useState([])
   const [isLoading, setIsLoading] = useState(true);
 //   const baseUrl = "http://localhost:8000"

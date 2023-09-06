@@ -10,6 +10,8 @@ import {
   CircularProgress,
   Alert
 } from '@mui/material';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import jwtDecode from 'jwt-decode';
 import RegistrationForm from './RegistrationForm'; // Create this component
 
 const LoginForm = ({ onClose, showUserName }) => {
@@ -21,6 +23,7 @@ const LoginForm = ({ onClose, showUserName }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const clientId = '715608412851-5267tsdhnetciohip2kkqfvb1savkno9.apps.googleusercontent.com';
 
   const toggleForms = () => {
     setShowLoginForm(!showLoginForm);
@@ -52,6 +55,59 @@ const LoginForm = ({ onClose, showUserName }) => {
     setLoading(false);
   };
 
+
+
+  // handle google login 
+  const handleSuccess = async (response) => {
+  const { credential } = response;
+const decodedToken = jwtDecode(credential);
+const userName = decodedToken.name
+const userEmail = decodedToken.email;
+
+//   console.log('Google login successful');
+//   console.log('User email:', userEmail);
+
+
+const data = {
+  email: userEmail,
+  password: userEmail,
+  username: userName
+};
+
+try {
+    const isUser = await axios.post(`${baseUrl}/google/register`, data);
+    if(isUser.data.success){
+      setLoading(true);
+      try {
+        const response = await axios.post(`${baseUrl}/login`, {
+          email: data.email, 
+          password: data.password, 
+        });
+  
+        if (response.data.success) {
+          const userData = response.data
+          localStorage.setItem('loggedUser', JSON.stringify(userData));
+          showUserName();
+          onClose();
+        } else {
+          setErrorMessage(response.data.msg);
+        }
+      } catch (error) {
+        setErrorMessage('Wrong credentials');
+      }
+      setLoading(false);
+    }
+} catch (error) {
+     console.log(error.message);
+}
+};
+
+const handleFailure = () => {
+  console.log('Google login failed');
+  // Handle the failed login response
+};
+
+
   return (
     <Dialog open={true} onClose={onClose}>
       <DialogTitle>{showLoginForm ? 'Login' : 'Registration'}</DialogTitle>
@@ -59,9 +115,16 @@ const LoginForm = ({ onClose, showUserName }) => {
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         {showLoginForm && (
           <div>
-            <Button variant="contained" fullWidth color="primary">
+            {/* <Button variant="contained" fullWidth color="primary">
               Continue with Google
-            </Button>
+            </Button> */}
+            <GoogleOAuthProvider clientId={clientId}>
+        <GoogleLogin
+          id="google-login-button" // Add an ID to the GoogleLogin component
+          onSuccess={handleSuccess}
+          onError={handleFailure}
+        />
+      </GoogleOAuthProvider>
             <TextField
               fullWidth
               type="email"

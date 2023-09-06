@@ -71,7 +71,7 @@ const NavigationBar = () => {
   const showUsername = () => {
     const user_name = JSON.parse(localStorage.getItem("loggedUser")) || '';
     setUserName(user_name ? user_name.data.username : '');
-    setUserId(user_name.data._id)
+    setUserId(user_name ? user_name.data._id : "")
   }
 
   const handleLogout = () => {

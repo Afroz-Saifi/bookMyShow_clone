@@ -129,4 +129,28 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-module.exports = { registerUser, loginUser, optVerifier };
+
+// google registration
+const googlRegister = async (req, res) => {
+  try {
+    const data = req.body;
+    const isUser = await userModel.findOne({email: data.email});
+    if(isUser){
+      return res.status(201).json({
+        success: true
+      })
+    }
+    const hash = await bcrypt.hash(password, 5);
+    const userData = new userModel({...data, password: hash, verify: true});
+    await userData.save();
+    return res.status(200).json({
+      success: true
+    })
+  } catch (error) {
+    return res.status(500).json({
+      msg: error.message
+    })
+  }
+}
+
+module.exports = { registerUser, loginUser, optVerifier, googlRegister };
