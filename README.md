@@ -1,6 +1,23 @@
 # showVibes (bookmyshow.com clone)
 A dynamic online platform akin to BookMyShow.com, dedicated to simplifying the ticket booking experience for a diverse array of movies across various theaters. Offering convenient access to a wide range of showtimes and dates, this website presents a seamless interface for users to secure their movie tickets hassle-free. <br />
 <a href="https://showvibes.netlify.app/"> Click here to visit the live project </a>
+
+# Tech-Stack used : 
+![home](https://img.shields.io/badge/html-FF4154?style=for-the-badge&logo=Html&logoColor=white)
+![home](https://img.shields.io/badge/css-F26B00?style=for-the-badge&logo=Css&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![home](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) 
+![home](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![home](https://img.shields.io/badge/git-000000?style=for-the-badge&logo=Git&logoColor=white)
+![mongoDB](https://img.shields.io/badge/MongoDB-43B02A?style=for-the-badge&logo=MongoDB&logoColor=white)
+![home](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white) 
+![home](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) 
+![home](https://img.shields.io/badge/Material_UI-FF4154?style=for-the-badge&logo=Material_UI&logoColor=white)
+![home](https://img.shields.io/badge/Nodemailer-000000?style=for-the-badge&logo=Nodemailer&logoColor=white)
+![home](https://img.shields.io/badge/QRCODE-000000?style=for-the-badge&logo=QRCODE&logoColor=white)
+![Nodemon](https://img.shields.io/badge/NODEMON-%23323330.svg?style=for-the-badge&logo=nodemon&logoColor=%BBDEAD)
+![home](https://img.shields.io/badge/Postman-FF4154?style=for-the-badge&logo=Postman&logoColor=white)
+
 <hr>
 
 ## landing page
