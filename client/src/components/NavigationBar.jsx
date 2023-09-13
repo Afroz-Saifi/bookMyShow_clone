@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
-import mainLogo from '../images/main_logo.png'
+import mainLogo from '../assets/main_logo.png'
 
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import screen from '../images/screen.png'
+import screen from '../assets/screen.png'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, Alert } from "@mui/material";
 
 const BuySeats = () => {
@@ -10,6 +10,11 @@ const BuySeats = () => {
   const { _id, selectedSeats, selectedDate, selectedTime, cinemaName } = location.state;
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${userData.token}`
+    }
+  };
   const [openDialog, setOpenDialog] = useState(false);
   const [showName, setShowName] = useState('');
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
@@ -26,7 +31,7 @@ const BuySeats = () => {
 
   const fetchCinema = async () => {
     try {
-        const response = await axios(`${baseUrl}/cinema/cinema/${_id}`)
+        const response = await axios(`${baseUrl}/cinema/cinema/${_id}`, config)
         if(response.data.success){
             setCinemaData(response.data.data)
             setShowName(response.data.data.name)
@@ -45,7 +50,7 @@ const BuySeats = () => {
             date: selectedDate, 
             time: selectedTime,
             movieId: moviData._id
-        })
+        }, config)
         if(response.data.success){
             // console.log(response.data);
             const flattenedArray  = [].concat(...response.data.data[0].seats)

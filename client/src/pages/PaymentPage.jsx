@@ -9,6 +9,11 @@ const PaymentPage = () => {
     const moviData = JSON.parse(localStorage.getItem("bookMovie")) || '';
     const langFormat = JSON.parse(localStorage.getItem("langFormat")) || '';
     const userData = JSON.parse(localStorage.getItem('loggedUser')) || '';
+    const config = {
+        headers: {
+          'Authorization': `Bearer ${userData.token}`
+        }
+      };
     const [userMobile, setUserMobile] = useState('+91');
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
@@ -52,7 +57,7 @@ const PaymentPage = () => {
                 cinemaName: showName,
                 payment: (payableAmount+141.60).toFixed(2),
                 movieId: moviData._id
-            })
+            }, config)
             if(response.data.success){
                 setErrorMessage('');
                 setSuccessPayment('Please check you mail')

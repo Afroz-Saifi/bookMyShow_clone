@@ -17,6 +17,11 @@ import { Alert, CircularProgress } from "@mui/material";
 
 const FoodBeverage = () => {
   const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${userData.token}`
+    }
+  };
     const location = useLocation();
     const { _id, showName, tickets, selectedDate, selectedTime, payment, seatIN, cinemaName } = location.state;
     const navigate = useNavigate();
@@ -34,7 +39,7 @@ const FoodBeverage = () => {
     const fetchFood = async (category) => {
       setIsLoading(true);
         try {
-            const response = await axios(`${baseUrl}/${category}`)
+            const response = await axios(`${baseUrl}/${category}`, config)
             if(response.data.success){
                 setFoodData(response.data.data);
             }

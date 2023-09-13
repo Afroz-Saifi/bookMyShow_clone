@@ -16,7 +16,7 @@ const Movies = () => {
     const fetchMovies = async () => {
         try {
             const response = await axios.get(baseUrl)
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data.success){
                 setMovieData(response.data.data)
             }

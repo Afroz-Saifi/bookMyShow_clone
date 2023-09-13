@@ -15,10 +15,10 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 app.use("/movies", movieRouter)
+app.use(authCheck);
 app.use("/cinema", cinemaRouter)
 app.use("/bookings", bookingsRouter)
 app.use("/food", foodBeverageRouter)
-app.use(authCheck);
 
 app.listen(process.env.PORT, () => {
   console.log(`server running on PORT ${process.env.PORT}`);

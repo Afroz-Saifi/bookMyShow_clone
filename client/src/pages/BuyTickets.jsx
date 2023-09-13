@@ -32,6 +32,11 @@ const getDateAtIndex = (index) => {
 
 const BuyTickets = () => {
   const userData = JSON.parse(localStorage.getItem("loggedUser")) || '';
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${userData.token}`
+    }
+  };
     const langFormatData = JSON.parse(localStorage.getItem("langFormat"));
     const { language, format } = langFormatData || {}; 
     const [selectedCinemaId, setSelectedCinemaId] = useState(null)
@@ -67,7 +72,7 @@ const BuyTickets = () => {
 
   const fetchCinemas = async () => {
     try {
-        const response = await axios(`${baseUrl}/cinemas`)
+        const response = await axios(`${baseUrl}/cinemas`, config)
         if(response.data.success){
             setCinemaData(response.data.data)
         }

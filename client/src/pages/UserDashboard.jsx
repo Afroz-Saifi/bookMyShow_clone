@@ -10,6 +10,12 @@ import { CardActionArea, CircularProgress } from '@mui/material';
 const UserDashboard = () => {
   const navigate = useNavigate()
   const {id} = useParams()
+  const userData = JSON.parse(localStorage.getItem('loggedUser')) || '';
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${userData.token}`
+    }
+  };
   // const baseUrl = "http://localhost:8000/bookings/getMybookings"
   const baseUrl = "https://showvibes.onrender.com/bookings/getMybookings"
 
@@ -19,7 +25,7 @@ const UserDashboard = () => {
 
   const fetchMyBookings = async () => {
     try {
-      const response = await axios(`${baseUrl}/${id}`)
+      const response = await axios(`${baseUrl}/${id}`, config)
       if(response.data.success){
         setMyBookings(response.data.data.reverse())
       }
