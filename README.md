@@ -1,6 +1,6 @@
 # showVibes (bookmyshow.com clone)
 A dynamic online platform akin to BookMyShow.com, dedicated to simplifying the ticket booking experience for a diverse array of movies across various theaters. Offering convenient access to a wide range of showtimes and dates, this website presents a seamless interface for users to secure their movie tickets hassle-free. <br />
-<a href="https://showvibes.netlify.app/"> Click here to visit the live project </a>
+<a href="https://showvibes.netlify.app/"> Click here to visit the live project </a> <br />
 <a href="https://www.linkedin.com/feed/update/urn:li:activity:7107717869454450688/"> Click to see the demo presentation </a>
 
 # Tech-Stack used : 
